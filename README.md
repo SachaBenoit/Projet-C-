@@ -1,7 +1,7 @@
 # Projet_Csharp
 
 ## Binome
-Benoit Meylan
 
-Sacha Usan
+ - Benoit Meylan
+ - Sacha Usan
 
