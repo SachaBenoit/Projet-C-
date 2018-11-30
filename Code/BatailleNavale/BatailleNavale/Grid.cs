@@ -9,13 +9,17 @@ using System.Drawing;
 
 namespace BatailleNavale
 {
-    class Grid
+    class Grid : PictureBox
     {
         private int cellSize; //size of a cell
         private int nbCells; //nb cells for each side
         private int position_top; //top position of the grid (px)
         private int position_left;//left position of the grid (px)
-        PictureBox pictureBox = new PictureBox();
+
+        int verticalPosition = 1;
+        char horizontalPosition = 'A';
+
+        
 
 
         public Grid(int cellSize, int nbCells , int position_top = 0, int position_left = 0)
@@ -24,30 +28,34 @@ namespace BatailleNavale
             this.nbCells = nbCells;
             this.position_top = position_top;
             this.position_left = position_left;
+
+            CreatePicture();
         }
 
         public PictureBox CreatePicture()
         {
-            int pictureBox_top = 200;
-            int pictureBox_left = 100;
+            int pictureBox_top = position_top;
+            int pictureBox_left = position_left;
 
-            pictureBox.Size = new Size(cellSize * nbCells, cellSize * nbCells);
-            pictureBox.Top = pictureBox_top;
-            pictureBox.Left = pictureBox_left;
+
+            this.Size = new Size(cellSize * nbCells, cellSize * nbCells);
+            this.Top = pictureBox_top;
+            this.Left = pictureBox_left;
 
             Bitmap flag = new Bitmap(cellSize * nbCells, cellSize * nbCells);
             Graphics flagGraphics = Graphics.FromImage(flag);
             flagGraphics.FillRectangle(Brushes.White, 0, 0, cellSize * nbCells, cellSize * nbCells);
-            pictureBox.Image = flag;
+            this.Image = flag;
 
-            return pictureBox;   
+            return this;   
         }
 
 
-        public void ClickOnPictureBox()
+        public void ClickOnPictureBox(object sender, EventArgs e)
         {
             PictureBox pbx = sender as PictureBox;
 
+            var mouse_position = PointToClient(Cursor.Position); // position de la souris par rapport à la grille
 
             int pictureBox_top = pbx.Top;
             int pictureBox_left = pbx.Left;
@@ -60,10 +68,12 @@ namespace BatailleNavale
             int nbCells_x = pictureBox_width / cellSize;
             int nbCells_y = pictureBox_height / cellSize;
 
-            var mouse_position = this.PointToClient(Cursor.Position);
+            
+            
 
-            mouse_position.X -= pictureBox_left;
-            mouse_position.Y -= pictureBox_top;
+
+            // mouse_position.X -= pictureBox_left;
+            // mouse_position.Y -= pictureBox_top;
 
             Console.WriteLine("nb Cells x : " + nbCells_x);
             Console.WriteLine("nb Cells y : " + nbCells_y);

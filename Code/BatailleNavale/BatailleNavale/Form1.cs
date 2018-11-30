@@ -19,9 +19,10 @@ namespace BatailleNavale
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Grid grid1 = new Grid(50, 2, 100, 100);
-            PictureBox pictureBox1 = grid1.CreatePicture();
-            this.Controls.Add(pictureBox1);
+            Grid grid1 = new Grid(30, 3, 50, 100);
+            this.Controls.Add(grid1);
+            grid1.Click += grid1.ClickOnPictureBox;
+            
 
             Timer timer = new Timer();
             timer.Interval = (1); // every 1 millesecond
@@ -33,5 +34,7 @@ namespace BatailleNavale
         {
             
         }
+
+        
     }
 }
