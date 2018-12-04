@@ -19,7 +19,15 @@ namespace BatailleNavale
         int verticalPosition = 1;
         char horizontalPosition = 'A';
 
-        
+        string _lastPosition = "";
+
+        public string lastPosition
+        {
+            get
+            {
+                return _lastPosition;
+            }
+        }
 
 
         public Grid(int cellSize, int nbCells , int position_top = 0, int position_left = 0)
@@ -30,9 +38,11 @@ namespace BatailleNavale
             this.position_left = position_left;
 
             CreatePicture();
+
+            this.MouseClick += new MouseEventHandler(ClickOnPictureBox); // Add a clic event on the card
         }
 
-        public PictureBox CreatePicture()
+        private PictureBox CreatePicture()
         {
             int pictureBox_top = position_top;
             int pictureBox_left = position_left;
@@ -52,9 +62,7 @@ namespace BatailleNavale
                 flagGraphics.FillRectangle(Brushes.Black, 0, i, cellSize * nbCells, 1);
                 flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
             }
-
-
-           
+    
 
             this.Image = flag;
 
@@ -62,7 +70,7 @@ namespace BatailleNavale
         }
 
 
-        public void ClickOnPictureBox(object sender, EventArgs e)
+        public void ClickOnPictureBox(object sender, MouseEventArgs e)
         {
             PictureBox pbx = sender as PictureBox;
 
@@ -108,17 +116,21 @@ namespace BatailleNavale
                 }
             }
 
-            Console.WriteLine("La position de la souris est : " + horizontalPosition + verticalPosition);
+            _lastPosition = horizontalPosition.ToString() + verticalPosition;
 
-            MessageBox.Show(horizontalPosition.ToString() + verticalPosition);
+            Console.WriteLine("La position de la souris est : " + lastPosition);
 
- 
+            //MessageBox.Show(lastPosition);
+
+
         }
 
-        public void DrawShip(Ship ship)
+        public void DrawShip(Ship ship, String Origin)
         {
-           
+
         }
+
+       
 
        
 

@@ -9,20 +9,42 @@ namespace BatailleNavale
     class Ship
     {
         private string name = "";
-        private int size = 0;
+        private int _size = 0;
         private IDictionary<string, bool> positions; //représente les positions d'un bateau (A1, A2) ainsi que leur état (touché ou pas)
-        private Orientation orientation;
+        private Orientation _orientation;
         private bool placed = false; //un bateau a-t-il été placé ?
 
-        public Ship(string name, int size, Orientation orientation)
+        public int size
+        {
+            get
+            {
+                return _size;
+            }
+        }
+
+        public Orientation orientation
+        {
+            get
+            {
+                return _orientation;
+            }
+        }
+            
+
+        public Ship(string name, int size, Orientation orientation = Orientation.Vertical)
         {
             this.name = name;
-            this.size = size;
-            this.orientation = orientation;
+            this._size = size;
+            this._orientation = orientation;
+          
 
             positions = new Dictionary<string, bool>();
         }
 
+        /// <summary>
+        /// Check if the ship is available
+        /// </summary>
+        /// <returns></returns>
         public bool Alive()
         {
             foreach (KeyValuePair<string, bool> part in positions)
@@ -36,7 +58,10 @@ namespace BatailleNavale
             return false; //toutes les parties du bateau ont été touché
         }
 
-        //retourne les positions non touchées du bateau
+        /// <summary>
+        /// Get the positions of a ship, only available parts are return
+        /// </summary>
+        /// <returns></returns>
         public List<string> Getpositions()
         {
             List<string> positions = new List<string>();
@@ -52,6 +77,10 @@ namespace BatailleNavale
             return positions;
         }
 
+        /// <summary>
+        /// Set the position of a ship
+        /// </summary>
+        /// <param name="origin"></param>
         public void SetPosition(string origin)
         {
             char vOrigin = 'A';
@@ -71,11 +100,11 @@ namespace BatailleNavale
                 vOrigin = 'A';
                 hOrigin = 1;
             }
-
+            
             //ajoutes les autres positioons du bateau
-            for(int i = 1; i < size; i++)
+            for(int i = 1; i < _size; i++)
             {
-                if(orientation == Orientation.Vertical)
+                if(_orientation == Orientation.Vertical)
                 {
                     hOrigin++;  
                 }
@@ -89,6 +118,15 @@ namespace BatailleNavale
 
             placed = true;
 
+        }
+
+        /// <summary>
+        /// Set the orientation of the ship
+        /// </summary>
+        /// <param name="orientation"></param>
+        public void SetOrientation(Orientation orientation)
+        {
+            this._orientation = orientation;
         }
 
 
