@@ -45,6 +45,17 @@ namespace BatailleNavale
             Bitmap flag = new Bitmap(cellSize * nbCells, cellSize * nbCells);
             Graphics flagGraphics = Graphics.FromImage(flag);
             flagGraphics.FillRectangle(Brushes.White, 0, 0, cellSize * nbCells, cellSize * nbCells);
+           
+
+            for(int i = 0; i <= nbCells * cellSize; i += cellSize)
+            {
+                flagGraphics.FillRectangle(Brushes.Black, 0, i, cellSize * nbCells, 1);
+                flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
+            }
+
+
+           
+
             this.Image = flag;
 
             return this;   
@@ -67,9 +78,6 @@ namespace BatailleNavale
 
             int nbCells_x = pictureBox_width / cellSize;
             int nbCells_y = pictureBox_height / cellSize;
-
-            
-            
 
 
             // mouse_position.X -= pictureBox_left;
@@ -101,9 +109,18 @@ namespace BatailleNavale
             }
 
             Console.WriteLine("La position de la souris est : " + horizontalPosition + verticalPosition);
+
+            MessageBox.Show(horizontalPosition.ToString() + verticalPosition);
+
+ 
         }
 
+        public void DrawShip(Ship ship)
+        {
+           
+        }
 
+       
 
     }
 }
