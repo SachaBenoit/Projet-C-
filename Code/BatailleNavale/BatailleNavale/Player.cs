@@ -23,17 +23,17 @@ namespace BatailleNavale
             return name;
         }
 
-<<<<<<< HEAD
+
         public string Shoot(char hPos, int vPos)
         {
             return "touché";
         }
-=======
+
         public void AddShip()
         {
 
         }
 
->>>>>>> master
+
     }
 }

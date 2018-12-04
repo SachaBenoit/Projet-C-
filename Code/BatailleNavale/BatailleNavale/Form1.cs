@@ -12,6 +12,9 @@ namespace BatailleNavale
 {
     public partial class Form1 : Form
     {
+        Grid grid1 = new Grid(50, 6, 50, 100);
+        Ship s1 = new Ship("test", 2, Orientation.Horizontal);
+
         public Form1()
         {
             InitializeComponent(); 
@@ -19,9 +22,11 @@ namespace BatailleNavale
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Grid grid1 = new Grid(50, 6, 50, 100);
+            
             this.Controls.Add(grid1);
-            grid1.Click += grid1.ClickOnPictureBox;
+
+            
+
             
 
             Timer timer = new Timer();
@@ -30,9 +35,11 @@ namespace BatailleNavale
             timer.Start();
 
 
+
+
             Ship ship1 = new Ship("Batavia", 5, Orientation.Vertical);
             ship1.SetPosition("C2");
-            List<string> l1 = new List<string>(); 
+            List<string> l1 = new List<string>();
                 
             l1 = ship1.Getpositions();
 
@@ -43,11 +50,12 @@ namespace BatailleNavale
 
 
 
+
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            
+            Console.WriteLine(grid1.lastPosition);
         }
 
         
