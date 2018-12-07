@@ -12,6 +12,8 @@ namespace BatailleNavale
 {
     public partial class Form1 : Form
     {
+        private FormMenu menuFrom;
+
         public Form1()
         {
             InitializeComponent(); 
@@ -19,6 +21,11 @@ namespace BatailleNavale
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            menuFrom = new FormMenu();
+            menuFrom.Show();
+            
+            /*
             Grid grid1 = new Grid(50, 6, 50, 100);
             this.Controls.Add(grid1);
             grid1.Click += grid1.ClickOnPictureBox;
@@ -40,7 +47,7 @@ namespace BatailleNavale
             {
                 Console.WriteLine(pos);
             }
-
+            */
 
 
         }
