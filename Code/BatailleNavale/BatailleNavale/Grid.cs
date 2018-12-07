@@ -130,16 +130,24 @@ namespace BatailleNavale
             }
 
             lastPosition = horizontalPosition.ToString() + verticalPosition;
-
-            MessageBox.Show(lastPosition);
-            
-            selectedship.SetPosition(lastPosition);
-
-            Console.WriteLine("Coordonnées du bateau : ");
-            foreach(string position in selectedship.Getpositions())
+            try
             {
-                Console.WriteLine(position);
+                selectedship.SetPosition(lastPosition);
+
+                MessageBox.Show(lastPosition);
+                Console.WriteLine("Coordonnées du bateau : ");
+                foreach (string position in selectedship.Getpositions())
+                {
+                    Console.WriteLine(position);
+                }
             }
+            catch
+            {
+                MessageBox.Show("Aucun bateau sélectionné");
+            }
+
+
+           
 
         }
 
