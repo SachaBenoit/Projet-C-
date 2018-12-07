@@ -15,17 +15,30 @@ namespace BatailleNavale
         private int nbCells; //nb cells for each side
         private int position_top; //top position of the grid (px)
         private int position_left;//left position of the grid (px)
+        private Ship selectedship;
 
         int verticalPosition = 1;
         char horizontalPosition = 'A';
 
-        string _lastPosition = "";
+        string lastPosition = "";
 
-        public string lastPosition
+        public Ship SelectedShip
         {
             get
             {
-                return _lastPosition;
+                return selectedship;
+            }
+            set
+            {
+                selectedship = value;
+            }
+        }
+
+        public string LastPosition
+        {
+            get
+            {
+                return lastPosition;
             }
         }
 
@@ -91,14 +104,14 @@ namespace BatailleNavale
             // mouse_position.X -= pictureBox_left;
             // mouse_position.Y -= pictureBox_top;
 
-            Console.WriteLine("nb Cells x : " + nbCells_x);
+            /*Console.WriteLine("nb Cells x : " + nbCells_x);
             Console.WriteLine("nb Cells y : " + nbCells_y);
 
             Console.WriteLine("size x : " + pictureBox_width);
             Console.WriteLine("size y : " + pictureBox_height);
 
             Console.WriteLine("pos x : " + mouse_position.X);
-            Console.WriteLine("pos y : " + mouse_position.Y);
+            Console.WriteLine("pos y : " + mouse_position.Y);*/
 
             for (int i = 0, ii = 0; i < pictureBox_width; i += cellSize, ii++)
             {
@@ -116,12 +129,17 @@ namespace BatailleNavale
                 }
             }
 
-            _lastPosition = horizontalPosition.ToString() + verticalPosition;
+            lastPosition = horizontalPosition.ToString() + verticalPosition;
 
-            Console.WriteLine("La position de la souris est : " + lastPosition);
+            MessageBox.Show(lastPosition);
+            
+            selectedship.SetPosition(lastPosition);
 
-            //MessageBox.Show(lastPosition);
-
+            Console.WriteLine("Coordonnées du bateau : ");
+            foreach(string position in selectedship.Getpositions())
+            {
+                Console.WriteLine(position);
+            }
 
         }
 

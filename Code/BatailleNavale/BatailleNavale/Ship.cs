@@ -9,16 +9,24 @@ namespace BatailleNavale
     class Ship
     {
         private string name = "";
-        private int _size = 0;
+        private int size = 0;
         private IDictionary<string, bool> positions; //représente les positions d'un bateau (A1, A2) ainsi que leur état (touché ou pas)
         private Orientation _orientation;
         private bool placed = false; //un bateau a-t-il été placé ?
 
-        public int size
+        public string Name
         {
             get
             {
-                return _size;
+                return name;
+            }
+        }
+
+        public int Size
+        {
+            get
+            {
+                return size;
             }
         }
 
@@ -34,7 +42,7 @@ namespace BatailleNavale
         public Ship(string name, int size, Orientation orientation = Orientation.Vertical)
         {
             this.name = name;
-            this._size = size;
+            this.size = size;
             this._orientation = orientation;
           
 
@@ -87,6 +95,8 @@ namespace BatailleNavale
             int hOrigin = 1;
             string position = "A1";
 
+            positions.Clear();
+
             positions.Add(origin, true); //ajoute la position d'origine
 
             try
@@ -102,7 +112,7 @@ namespace BatailleNavale
             }
             
             //ajoutes les autres positioons du bateau
-            for(int i = 1; i < _size; i++)
+            for(int i = 1; i < size; i++)
             {
                 if(_orientation == Orientation.Vertical)
                 {

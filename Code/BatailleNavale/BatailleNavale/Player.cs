@@ -12,10 +12,18 @@ namespace BatailleNavale
         private string ipAddress;
         private List<Ship> ships;
 
+        public List<Ship> Ships
+        {
+            get
+            {
+                return ships;
+            }
+        }
         public Player(string name, string ipAddress)
         {
             this.name = name;
             this.ipAddress = ipAddress;
+            this.ships = new List<Ship>();
         }
 
         public string GetName()
@@ -23,15 +31,14 @@ namespace BatailleNavale
             return name;
         }
 
-
         public string Shoot(char hPos, int vPos)
         {
             return "touché";
         }
 
-        public void AddShip()
+        public void AddShip(Ship ship)
         {
-
+            ships.Add(ship);
         }
 
 

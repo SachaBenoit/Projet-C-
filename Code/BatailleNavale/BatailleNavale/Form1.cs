@@ -13,7 +13,7 @@ namespace BatailleNavale
     public partial class Form1 : Form
     {
         Grid grid1 = new Grid(50, 6, 50, 100);
-        Ship s1 = new Ship("test", 2, Orientation.Horizontal);
+        Player player = new Player("benoit", "192.168.0.1");
 
         public Form1()
         {
@@ -25,39 +25,33 @@ namespace BatailleNavale
             
             this.Controls.Add(grid1);
 
-            
+           
 
-            
+            Ship ship = new Ship("porte-avion", 2, Orientation.Horizontal);
+            Ship ship2 = new Ship("porte-avion", 3, Orientation.Horizontal);
+
+            player.AddShip(ship);
+            player.AddShip(ship2);
+
+            foreach(Ship playerShip in player.Ships)
+            {
+                lstPlayerShip.Items.Add(playerShip.Name + " " + playerShip.Size + " cases");
+            }
 
             Timer timer = new Timer();
             timer.Interval = (1); // every 1 millesecond
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
-
-
-
-
-            Ship ship1 = new Ship("Batavia", 5, Orientation.Vertical);
-            ship1.SetPosition("C2");
-            List<string> l1 = new List<string>();
-                
-            l1 = ship1.Getpositions();
-
-            foreach(string pos in l1)
-            {
-                Console.WriteLine(pos);
-            }
-
-
-
-
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine(grid1.lastPosition);
         }
 
-        
+        private void lstPlayerShip_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            grid1.SelectedShip = player.Ships[lstPlayerShip.SelectedIndex];
+            Console.WriteLine(lstPlayerShip.SelectedIndex);
+        }
     }
 }
