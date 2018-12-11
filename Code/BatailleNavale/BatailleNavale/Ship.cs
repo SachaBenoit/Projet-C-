@@ -93,7 +93,7 @@ namespace BatailleNavale
         {
             char vOrigin = 'A';
             int hOrigin = 1;
-            string position = "A1";
+            string position = vOrigin.ToString() + hOrigin;
 
             positions.Clear();
 

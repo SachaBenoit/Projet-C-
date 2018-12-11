@@ -75,7 +75,6 @@ namespace BatailleNavale
                 flagGraphics.FillRectangle(Brushes.Black, 0, i, cellSize * nbCells, 1);
                 flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
             }
-    
 
             this.Image = flag;
 
