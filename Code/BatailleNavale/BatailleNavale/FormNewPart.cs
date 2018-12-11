@@ -12,6 +12,8 @@ namespace BatailleNavale
 {
     public partial class FormNewPart : Form
     {
+        private FormPart PartForm;
+
         public FormNewPart()
         {
             InitializeComponent();
@@ -34,7 +36,9 @@ namespace BatailleNavale
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            PartForm = new FormPart();
+            PartForm.Show();
         }
     }
 }

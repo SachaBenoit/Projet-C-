@@ -70,6 +70,12 @@
     <Compile Include="FormNewPart.Designer.cs">
       <DependentUpon>FormNewPart.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPart.Designer.cs">
+      <DependentUpon>FormPart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Grid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPart.resx">
       <DependentUpon>FormNewPart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPart.resx">
+      <DependentUpon>FormPart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
