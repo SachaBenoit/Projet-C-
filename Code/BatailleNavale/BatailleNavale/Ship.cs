@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
-    class Ship
+    public class Ship
     {
         private string name = "";
         private int size = 0;

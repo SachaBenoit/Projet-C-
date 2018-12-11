@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace BatailleNavale
 {
-    class Grid : PictureBox
+    public class Grid : PictureBox
     {
         private int cellSize; //size of a cell
         private int nbCells; //nb cells for each side
