@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
-    class Player
+    public class Player
     {
         private string name;
         private string ipAddress;
