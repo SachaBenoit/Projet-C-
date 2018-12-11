@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
-    enum Orientation
+    public enum Orientation
     {
         Vertical = 0,
         Horizontal = 1

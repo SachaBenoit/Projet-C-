@@ -11,7 +11,7 @@ namespace BatailleNavale
         private string name = "";
         private int size = 0;
         private IDictionary<string, bool> positions; //représente les positions d'un bateau (A1, A2) ainsi que leur état (touché ou pas)
-        private Orientation _orientation;
+        private Orientation orientation;
         private bool placed = false; //un bateau a-t-il été placé ?
 
         public string Name
@@ -30,22 +30,30 @@ namespace BatailleNavale
             }
         }
 
-        public Orientation orientation
+        public Orientation Orientation
         {
             get
             {
-                return _orientation;
+                return orientation;
             }
         }
+
+        public bool Placed
+        {
+            get
+            {
+                return placed;
+            }
+        }
+        
+       
             
 
         public Ship(string name, int size, Orientation orientation = Orientation.Vertical)
         {
             this.name = name;
             this.size = size;
-            this._orientation = orientation;
-          
-
+            this.orientation = orientation;
             positions = new Dictionary<string, bool>();
         }
 
@@ -86,16 +94,16 @@ namespace BatailleNavale
         }
 
         /// <summary>
-        /// Set the position of a ship
+        /// Assigne des positions pour le bateau
         /// </summary>
         /// <param name="origin"></param>
-        public void SetPosition(string origin)
+        public void SetPosition(string origin, int maxCells)
         {
             char vOrigin = 'A';
             int hOrigin = 1;
             string position = vOrigin.ToString() + hOrigin;
 
-            positions.Clear();
+            positions.Clear(); // met ou remet à zero les positions du bateau
 
             positions.Add(origin, true); //ajoute la position d'origine
 
@@ -114,7 +122,7 @@ namespace BatailleNavale
             //ajoutes les autres positioons du bateau
             for(int i = 1; i < size; i++)
             {
-                if(_orientation == Orientation.Vertical)
+                if(orientation == Orientation.Vertical)
                 {
                     hOrigin++;  
                 }
@@ -126,17 +134,28 @@ namespace BatailleNavale
                 positions.Add(position, true);
             }
 
-            placed = true;
+            //si le bateau est placé en dehors des limites : remet à zero sa position
+            if(vOrigin > maxCells+64 || hOrigin > maxCells)
+            {
+                positions.Clear();
+                Console.WriteLine("Position du bateau non valide");
+                placed = false;
+            }
+            else
+            {
+                placed = true;
+                Console.WriteLine("le bateau a correctement été placé");
+            }
 
         }
 
         /// <summary>
-        /// Set the orientation of the ship
+        /// Inverse l'orientation actuel du bateau
         /// </summary>
         /// <param name="orientation"></param>
-        public void SetOrientation(Orientation orientation)
+        public void SetOrientation()
         {
-            this._orientation = orientation;
+            this.orientation = (Orientation)(((int)this.orientation + 1) % 2);
         }
 
 

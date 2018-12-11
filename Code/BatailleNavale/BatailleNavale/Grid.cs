@@ -17,6 +17,10 @@ namespace BatailleNavale
         private int position_left;//left position of the grid (px)
         private Ship selectedship;
 
+        List<Ship> placedShips = new List<Ship>();
+
+        Bitmap flag;
+       
         int verticalPosition = 1;
         char horizontalPosition = 'A';
 
@@ -50,6 +54,9 @@ namespace BatailleNavale
             this.position_top = position_top;
             this.position_left = position_left;
 
+            flag = new Bitmap(cellSize * nbCells, cellSize * nbCells);
+            
+
             CreatePicture();
 
             this.MouseClick += new MouseEventHandler(ClickOnPictureBox); // Add a clic event on the card
@@ -65,18 +72,7 @@ namespace BatailleNavale
             this.Top = pictureBox_top;
             this.Left = pictureBox_left;
 
-            Bitmap flag = new Bitmap(cellSize * nbCells, cellSize * nbCells);
-            Graphics flagGraphics = Graphics.FromImage(flag);
-            flagGraphics.FillRectangle(Brushes.White, 0, 0, cellSize * nbCells, cellSize * nbCells);
-           
-
-            for(int i = 0; i <= nbCells * cellSize; i += cellSize)
-            {
-                flagGraphics.FillRectangle(Brushes.Black, 0, i, cellSize * nbCells, 1);
-                flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
-            }
-
-            this.Image = flag;
+            Draw();
 
             return this;   
         }
@@ -100,18 +96,7 @@ namespace BatailleNavale
             int nbCells_y = pictureBox_height / cellSize;
 
 
-            // mouse_position.X -= pictureBox_left;
-            // mouse_position.Y -= pictureBox_top;
-
-            /*Console.WriteLine("nb Cells x : " + nbCells_x);
-            Console.WriteLine("nb Cells y : " + nbCells_y);
-
-            Console.WriteLine("size x : " + pictureBox_width);
-            Console.WriteLine("size y : " + pictureBox_height);
-
-            Console.WriteLine("pos x : " + mouse_position.X);
-            Console.WriteLine("pos y : " + mouse_position.Y);*/
-
+            //décompose la grille pour la mettre sous forme de cellule (A1, D4)
             for (int i = 0, ii = 0; i < pictureBox_width; i += cellSize, ii++)
             {
                 if (mouse_position.X >= i && mouse_position.X <= i + cellSize)
@@ -131,7 +116,7 @@ namespace BatailleNavale
             lastPosition = horizontalPosition.ToString() + verticalPosition;
             try
             {
-                selectedship.SetPosition(lastPosition);
+                selectedship.SetPosition(lastPosition, nbCells);
 
                 MessageBox.Show(lastPosition);
                 Console.WriteLine("Coordonnées du bateau : ");
@@ -145,14 +130,83 @@ namespace BatailleNavale
                 MessageBox.Show("Aucun bateau sélectionné");
             }
 
+            try
+            {
+                if (selectedship.Placed)
+                { 
+                    if (!placedShips.Contains(selectedship))
+                    {
+                        placedShips.Add(selectedship);
+                    }
 
-           
-
+                    Draw();
+                }
+            }
+            catch(Exception exc)
+            {
+                Console.WriteLine("exception : " + exc);
+            }
         }
 
-        public void DrawShip(Ship ship, String Origin)
+
+        private void Draw()
         {
 
+            Graphics flagGraphics = Graphics.FromImage(flag);
+            flagGraphics.FillRectangle(Brushes.White, 0, 0, cellSize * nbCells, cellSize * nbCells);
+
+
+            for (int i = 0; i <= nbCells * cellSize; i += cellSize)
+            {
+                flagGraphics.FillRectangle(Brushes.Black, 0, i, cellSize * nbCells, 1);
+                flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
+            }
+
+
+            foreach (Ship ship in placedShips)
+            {
+                Point origin = cellToPositions(ship.Getpositions()[0]);
+
+                int shipWidth = 0;
+                int shipHeight = 0;
+
+                if (ship.Orientation == Orientation.Horizontal)
+                {
+                    shipHeight = cellSize / 3;
+                    shipWidth = ship.Size * cellSize - 3;
+                }
+                else
+                {
+                    shipWidth = cellSize / 3;
+                    shipHeight = ship.Size * cellSize - 3;
+                }
+
+              
+                flagGraphics.FillRectangle(Brushes.Gray, origin.X, origin.Y, shipWidth, shipHeight);
+            }
+
+            this.Image = flag;
+        }
+
+        private Point cellToPositions(string cell)
+        {
+            Point point = new Point();
+            int hPos = System.Convert.ToChar(cell.Substring(0, 1)) - 64;
+            int vPos = System.Convert.ToInt32(cell.Substring(1, 1));
+
+
+            if(selectedship.Orientation == Orientation.Horizontal)
+            {
+                point.X = (hPos - 1) * cellSize + 2;
+                point.Y = (vPos - 1) * cellSize + cellSize / 3;
+            }
+            else
+            {
+                point.Y = (vPos - 1) * cellSize + 2;
+                point.X = (hPos - 1) * cellSize +  cellSize / 3;
+            }
+
+            return point;
         }
 
        
