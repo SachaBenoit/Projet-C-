@@ -80,7 +80,6 @@
             this.txtNameSecondPlayer.Size = new System.Drawing.Size(176, 20);
             this.txtNameSecondPlayer.TabIndex = 4;
             this.txtNameSecondPlayer.Text = "Nom du deuxième joueur";
-            this.txtNameSecondPlayer.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // txtIPv4SecondPlayer
             // 
