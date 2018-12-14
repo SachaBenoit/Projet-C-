@@ -14,8 +14,14 @@ namespace BatailleNavale
     public partial class Form1 : Form
     {
 
-        Grid grid1 = new Grid(50, 6, 50, 100);
+        private bool gameStarted = false;
+
+        List<Player> players = new List<Player>();
+   
+
         Player player = new Player("benoit", "192.168.0.1");
+        Player player2 = new Player("robot", "192.168.0.2");
+        Grid grid1;
 
         private FormMenu menuFrom;
 
@@ -28,19 +34,26 @@ namespace BatailleNavale
         private void Form1_Load(object sender, EventArgs e)
         {
 
-           // menuFrom = new FormMenu();
-           // menuFrom.Show();
-            
+            players.Add(player);
+            players.Add(player2);
+
+            grid1 = new Grid(player2, 50, 6, 50, 50);
+
+            grid1.MouseClick += new MouseEventHandler(ClickOnPictureBox);
+
+            ;            // menuFrom = new FormMenu();
+            // menuFrom.Show();
             
             this.Controls.Add(grid1);
 
-           
 
-            Ship ship = new Ship("porte-avion", 2, Orientation.Horizontal);
+            Ship ship = new Ship("Fregate", 2, Orientation.Horizontal);
             Ship ship2 = new Ship("porte-avion", 3, Orientation.Horizontal);
+            Ship ship3 = new Ship("Fregate", 2, Orientation.Horizontal);
 
             player.AddShip(ship);
             player.AddShip(ship2);
+            player.AddShip(ship3);
 
             foreach(Ship playerShip in player.Ships)
             {
@@ -53,9 +66,59 @@ namespace BatailleNavale
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
 
-            
+        }
+
+        public void ClickOnPictureBox(object sender, MouseEventArgs e)
+        {
+            PictureBox pbx = sender as PictureBox;
+
+      
+            Point mouse_position = new Point(); // position de la souris par rapport à la grille
+            mouse_position.X = e.X;
+            mouse_position.Y = e.Y;
+
+            int pictureBox_top = pbx.Top;
+            int pictureBox_left = pbx.Left;
+            int pictureBox_bottom = pbx.Bottom;
+            int pictureBox_right = pbx.Right;
+
+            int pictureBox_width = pictureBox_bottom - pictureBox_top;
+            int pictureBox_height = pictureBox_right - pictureBox_left;
+
+            int nbCells_x = pictureBox_width / grid1.CellSize;
+            int nbCells_y = pictureBox_height / grid1.CellSize;
 
 
+            //décompose la grille pour la mettre sous forme de cellule (A1, D4)
+            for (int i = 0, ii = 0; i < pictureBox_width; i += grid1.CellSize, ii++)
+            {
+                if (mouse_position.X >= i && mouse_position.X <= i + grid1.CellSize)
+                {
+                    grid1.HorizontalPosition = (char)(ii + 65);
+
+                    for (int j = 0, jj = 1; j < pictureBox_height; j += grid1.CellSize, jj++)
+                    {
+                        if (mouse_position.Y >= j && mouse_position.Y <= j + grid1.CellSize)
+                        {
+                            grid1.VerticalPosition = jj;
+                        }
+                    }
+                }
+            }
+
+            //position du joueur
+            grid1.LastPosition = grid1.HorizontalPosition.ToString() + grid1.VerticalPosition;
+
+            if (gameStarted)
+            {
+                player2.Shoot(player, grid1.LastPosition);
+            }
+            else
+            {
+                grid1.PlacementPhase(player.Ships[lstPlayerShip.SelectedIndex]);
+            }
+
+        
 
         }
 
@@ -72,7 +135,6 @@ namespace BatailleNavale
         {
             try
             {
-                grid1.SelectedShip = player.Ships[lstPlayerShip.SelectedIndex];
                 lblOrientation.Text = "Orientation du bateau : " + player.Ships[lstPlayerShip.SelectedIndex].Orientation;
                 Console.WriteLine(lstPlayerShip.SelectedIndex);
             }
@@ -94,6 +156,11 @@ namespace BatailleNavale
                 MessageBox.Show("Aucun Bateau sélectionné");
             }
            
+        }
+
+        private void cmdReady_Click(object sender, EventArgs e)
+        {
+            gameStarted = true;
         }
     }
 }

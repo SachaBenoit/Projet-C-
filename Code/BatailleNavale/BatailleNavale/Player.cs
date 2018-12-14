@@ -10,7 +10,16 @@ namespace BatailleNavale
     {
         private string name;
         private string ipAddress;
+        private bool ready = false;
         private List<Ship> ships;
+
+        public bool Ready
+        {
+            get
+            {
+                return ready;
+            }
+        }
 
         public List<Ship> Ships
         {
@@ -31,9 +40,21 @@ namespace BatailleNavale
             return name;
         }
 
-        public string Shoot(char hPos, int vPos)
+        public bool Shoot(Player targetPlayer, string targetPosition)
         {
-            return "touché";
+            foreach(Ship ship in targetPlayer.ships)
+            {
+                foreach(string position in ship.Positions.Keys)
+                {
+                    if(position == targetPosition)
+                    {
+                        Console.WriteLine("----- TOUCHE -----");
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public void AddShip(Ship ship)

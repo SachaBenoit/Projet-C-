@@ -38,6 +38,14 @@ namespace BatailleNavale
             }
         }
 
+        public IDictionary<string,bool> Positions
+        {
+            get
+            {
+                return positions;
+            }
+        }
+
         public bool Placed
         {
             get
@@ -46,8 +54,6 @@ namespace BatailleNavale
             }
         }
         
-       
-            
 
         public Ship(string name, int size, Orientation orientation = Orientation.Vertical)
         {
@@ -65,7 +71,7 @@ namespace BatailleNavale
         {
             foreach (KeyValuePair<string, bool> part in positions)
             {
-                if (part.Value) // si une partie du bateau n'a pas encore été touché il est encore en vie
+                if (part.Value) // si une au moins une cellule du bateau n'a pas été touchée, le bateau est en vie
                 {
                     return true;
                 }
@@ -89,7 +95,6 @@ namespace BatailleNavale
                     positions.Add(part.Key);
                 }
             }
-
             return positions;
         }
 
