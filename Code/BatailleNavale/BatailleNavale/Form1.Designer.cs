@@ -29,9 +29,13 @@
         private void InitializeComponent()
         {
             this.lstPlayerShip = new System.Windows.Forms.ListBox();
+
             this.lblOrientation = new System.Windows.Forms.Label();
             this.cmdSetOrientation = new System.Windows.Forms.Button();
             this.cmdReady = new System.Windows.Forms.Button();
+
+            this.button1 = new System.Windows.Forms.Button();
+
             this.SuspendLayout();
             // 
             // lstPlayerShip
@@ -43,6 +47,7 @@
             this.lstPlayerShip.TabIndex = 0;
             this.lstPlayerShip.SelectedIndexChanged += new System.EventHandler(this.lstPlayerShip_SelectedIndexChanged);
             // 
+
             // lblOrientation
             // 
             this.lblOrientation.AutoSize = true;
@@ -72,15 +77,30 @@
             this.cmdReady.Text = "Prêt";
             this.cmdReady.UseVisualStyleBackColor = true;
             this.cmdReady.Click += new System.EventHandler(this.cmdReady_Click);
+
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(266, 232);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 553);
+
             this.Controls.Add(this.cmdReady);
             this.Controls.Add(this.cmdSetOrientation);
             this.Controls.Add(this.lblOrientation);
+
+            this.Controls.Add(this.button1);
+
             this.Controls.Add(this.lstPlayerShip);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -93,9 +113,13 @@
         #endregion
 
         private System.Windows.Forms.ListBox lstPlayerShip;
+
         private System.Windows.Forms.Label lblOrientation;
         private System.Windows.Forms.Button cmdSetOrientation;
         private System.Windows.Forms.Button cmdReady;
+
+        private System.Windows.Forms.Button button1;
+
     }
 }
 
