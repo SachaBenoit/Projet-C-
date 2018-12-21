@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BatailleNavale
 {
@@ -48,12 +49,23 @@ namespace BatailleNavale
                 {
                     if(position == targetPosition)
                     {
-                        Console.WriteLine("----- TOUCHE -----");
+                        ship.Positions[position] = false;
+                        if (!ship.Alive())
+                        {
+                            Console.WriteLine("----- TOUCHÉ COULÉ ! -----");
+                            MessageBox.Show("Touché coulé !");
+                        }
+                        else
+                        {
+                            Console.WriteLine("----- TOUCHÉ ! -----");
+                        }
+
                         return true;
                     }
+
                 }
             }
-
+            Console.WriteLine("---- PLOUF ! -----");
             return false;
         }
 

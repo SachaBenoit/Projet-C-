@@ -19,9 +19,16 @@ namespace BatailleNavale
         List<Player> players = new List<Player>();
    
 
-        Player player = new Player("benoit", "192.168.0.1");
-        Player player2 = new Player("robot", "192.168.0.2");
+        Player player2 = new Player("benoit", "192.168.0.1");
+        Player player = new Player("robot", "192.168.0.2");
         Grid grid1;
+
+        int gridTop = 50;
+        int gridLeft = 50;
+
+        bool ShipHit = false;
+
+
 
         private FormMenu menuFrom;
 
@@ -37,15 +44,14 @@ namespace BatailleNavale
             players.Add(player);
             players.Add(player2);
 
-            grid1 = new Grid(player2, 50, 6, 50, 50);
+            grid1 = new Grid(player2, 50, 6, gridTop, gridLeft);
 
             grid1.MouseClick += new MouseEventHandler(ClickOnPictureBox);
 
-            ;            // menuFrom = new FormMenu();
+            // menuFrom = new FormMenu();
             // menuFrom.Show();
             
             this.Controls.Add(grid1);
-
 
             Ship ship = new Ship("Fregate", 2, Orientation.Horizontal);
             Ship ship2 = new Ship("porte-avion", 3, Orientation.Horizontal);
@@ -111,11 +117,25 @@ namespace BatailleNavale
 
             if (gameStarted)
             {
-                player2.Shoot(player, grid1.LastPosition);
+                Point point = new Point();
+                point = grid1.cellToPositions(grid1.LastPosition);
+                if (player2.Shoot(player, grid1.LastPosition))
+                {
+                    Target target = new Target(point.X, point.Y, grid1.CellSize , grid1.CellSize, true);
+                    this.Controls.Add(target);
+                    target.BringToFront();
+
+                }
+                else
+                {
+                    Target target = new Target(point.X, point.Y, grid1.CellSize, grid1.CellSize, false);
+                    this.Controls.Add(target);
+                    target.BringToFront();
+                }
             }
             else
             {
-                grid1.PlacementPhase(player.Ships[lstPlayerShip.SelectedIndex]);
+                grid1.PlaceShip(player.Ships[lstPlayerShip.SelectedIndex]);
             }
 
         
@@ -160,7 +180,10 @@ namespace BatailleNavale
 
         private void cmdReady_Click(object sender, EventArgs e)
         {
+            grid1.CleanGrid();
             gameStarted = true;
         }
+
+
     }
 }

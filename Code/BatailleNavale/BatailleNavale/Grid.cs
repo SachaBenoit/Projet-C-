@@ -105,11 +105,7 @@ namespace BatailleNavale
             this.position_left = position_left;
 
             flag = new Bitmap(cellSize * nbCells, cellSize * nbCells);
-            
-
-            CreatePicture();
-
-           
+            CreatePicture();     
         }
 
         private PictureBox CreatePicture()
@@ -122,18 +118,16 @@ namespace BatailleNavale
             this.Top = pictureBox_top;
             this.Left = pictureBox_left;
 
-            Draw();
+
+            DrawShips();
 
             return this;   
         }
 
 
-        public void PlayPhase()
-        {
-            
-        }
 
-        public void PlacementPhase(Ship shipToPlace)
+
+        public void PlaceShip(Ship shipToPlace)
         {
             try
             {
@@ -160,7 +154,7 @@ namespace BatailleNavale
                         placedShips.Add(shipToPlace);
                     }
 
-                    Draw();
+                    DrawShips();
                 }
             }
             catch (Exception exc)
@@ -169,10 +163,27 @@ namespace BatailleNavale
             }
         }
 
-
-        private void Draw()
+        /// <summary>
+        /// retourne le point en haut a gauche de la cellule
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="ship"></param>
+        /// <returns></returns>
+        public Point cellToPositions(string cell)
         {
+            Point point = new Point();
+            int hPos = System.Convert.ToChar(cell.Substring(0, 1)) - 64;
+            int vPos = System.Convert.ToInt32(cell.Substring(1, 1));
 
+            point.X = CellSize * hPos + 1;
+            point.Y = CellSize * vPos + 1;
+
+
+            return point;
+        }
+
+        public void CleanGrid()
+        {
             Graphics flagGraphics = Graphics.FromImage(flag);
             flagGraphics.FillRectangle(Brushes.LightBlue, 0, 0, cellSize * nbCells, cellSize * nbCells);
 
@@ -183,10 +194,44 @@ namespace BatailleNavale
                 flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
             }
 
+            this.Image = flag;
 
+        }
+
+
+        private void DrawShips()
+        {
+
+            Graphics flagGraphics = Graphics.FromImage(flag);
+            flagGraphics.FillRectangle(Brushes.LightBlue, 0, 0, cellSize * nbCells, cellSize * nbCells);
+
+            //dessiner la grille
+            for (int i = 0; i <= nbCells * cellSize; i += cellSize)
+            {
+                flagGraphics.FillRectangle(Brushes.Black, 0, i, cellSize * nbCells, 1);
+                flagGraphics.FillRectangle(Brushes.Black, i, 0, 1, cellSize * nbCells);
+            }
+
+            //dessiner les navires
             foreach (Ship ship in placedShips)
             {
-                Point origin = cellToPositions(ship.Getpositions()[0], ship);
+                Point origin = new Point(); 
+
+                int hPos = System.Convert.ToChar(ship.Getpositions()[0].Substring(0, 1)) - 64;
+                int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, 1));
+
+                if (ship.Orientation == Orientation.Horizontal)
+                {
+                    origin.X = (hPos - 1) * cellSize + 2;
+                    origin.Y = (vPos - 1) * cellSize + cellSize / 3;
+                }
+                else
+                {
+                    origin.Y = (vPos - 1) * cellSize + 2;
+                    origin.X = (hPos - 1) * cellSize + cellSize / 3;
+                }
+
+
 
                 int shipWidth = 0;
                 int shipHeight = 0;
@@ -209,26 +254,7 @@ namespace BatailleNavale
             this.Image = flag;
         }
 
-        private Point cellToPositions(string cell, Ship ship)
-        {
-            Point point = new Point();
-            int hPos = System.Convert.ToChar(cell.Substring(0, 1)) - 64;
-            int vPos = System.Convert.ToInt32(cell.Substring(1, 1));
 
-
-            if(ship.Orientation == Orientation.Horizontal)
-            {
-                point.X = (hPos - 1) * cellSize + 2;
-                point.Y = (vPos - 1) * cellSize + cellSize / 3;
-            }
-            else
-            {
-                point.Y = (vPos - 1) * cellSize + 2;
-                point.X = (hPos - 1) * cellSize +  cellSize / 3;
-            }
-
-            return point;
-        }
 
        
 

@@ -12,6 +12,8 @@ namespace BatailleNavale
 {
     public partial class FormNewPart : Form
     {
+        public static int test;
+
         public FormNewPart()
         {
             InitializeComponent();
