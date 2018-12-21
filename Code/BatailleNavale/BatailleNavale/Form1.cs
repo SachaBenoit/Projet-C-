@@ -22,6 +22,7 @@ namespace BatailleNavale
         Player player = new Player("robot", "192.168.0.2");
         Grid grid1;
 
+
         int gridTop = 50;
         int gridLeft = 50;
 
@@ -30,6 +31,7 @@ namespace BatailleNavale
 
 
         private FormMenu menuFrom;
+
 
         public Form1()
         {
@@ -47,12 +49,13 @@ namespace BatailleNavale
 
             grid1.MouseClick += new MouseEventHandler(ClickOnPictureBox);
 
+
            
             this.Hide();
             menuFrom = new FormMenu();
             menuFrom.Show();
+
            
-            
 
             this.Controls.Add(grid1);
 
@@ -193,12 +196,14 @@ namespace BatailleNavale
         }
 
 
+
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
             menuFrom = new FormMenu();
             menuFrom.Show();
         }
+
 
     }
 }

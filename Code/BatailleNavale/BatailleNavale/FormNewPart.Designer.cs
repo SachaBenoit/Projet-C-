@@ -28,38 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cmdPartLocal = new System.Windows.Forms.Button();
-            this.cmdPartOnline = new System.Windows.Forms.Button();
             this.txtNamePart = new System.Windows.Forms.TextBox();
             this.txtNamePlayer = new System.Windows.Forms.TextBox();
             this.txtNameSecondPlayer = new System.Windows.Forms.TextBox();
             this.txtIPv4SecondPlayer = new System.Windows.Forms.TextBox();
             this.cmdPlay = new System.Windows.Forms.Button();
+            this.rdbPartLocal = new System.Windows.Forms.RadioButton();
+            this.rdbPartOnline = new System.Windows.Forms.RadioButton();
+            this.nudNbCells = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).BeginInit();
             this.SuspendLayout();
-            // 
-            // cmdPartLocal
-            // 
-            this.cmdPartLocal.Location = new System.Drawing.Point(106, 72);
-            this.cmdPartLocal.Name = "cmdPartLocal";
-            this.cmdPartLocal.Size = new System.Drawing.Size(131, 96);
-            this.cmdPartLocal.TabIndex = 0;
-            this.cmdPartLocal.Text = "Partie Local";
-            this.cmdPartLocal.UseVisualStyleBackColor = true;
-            this.cmdPartLocal.Click += new System.EventHandler(this.cmdPartLocal_Click);
-            // 
-            // cmdPartOnline
-            // 
-            this.cmdPartOnline.Location = new System.Drawing.Point(106, 270);
-            this.cmdPartOnline.Name = "cmdPartOnline";
-            this.cmdPartOnline.Size = new System.Drawing.Size(131, 96);
-            this.cmdPartOnline.TabIndex = 1;
-            this.cmdPartOnline.Text = "Partie Réseau";
-            this.cmdPartOnline.UseVisualStyleBackColor = true;
-            this.cmdPartOnline.Click += new System.EventHandler(this.cmdPartOnline_Click);
             // 
             // txtNamePart
             // 
-            this.txtNamePart.Location = new System.Drawing.Point(580, 51);
+            this.txtNamePart.Location = new System.Drawing.Point(198, 40);
             this.txtNamePart.Name = "txtNamePart";
             this.txtNamePart.Size = new System.Drawing.Size(176, 20);
             this.txtNamePart.TabIndex = 2;
@@ -67,7 +49,7 @@
             // 
             // txtNamePlayer
             // 
-            this.txtNamePlayer.Location = new System.Drawing.Point(580, 111);
+            this.txtNamePlayer.Location = new System.Drawing.Point(198, 100);
             this.txtNamePlayer.Name = "txtNamePlayer";
             this.txtNamePlayer.Size = new System.Drawing.Size(176, 20);
             this.txtNamePlayer.TabIndex = 3;
@@ -75,7 +57,7 @@
             // 
             // txtNameSecondPlayer
             // 
-            this.txtNameSecondPlayer.Location = new System.Drawing.Point(580, 175);
+            this.txtNameSecondPlayer.Location = new System.Drawing.Point(198, 164);
             this.txtNameSecondPlayer.Name = "txtNameSecondPlayer";
             this.txtNameSecondPlayer.Size = new System.Drawing.Size(176, 20);
             this.txtNameSecondPlayer.TabIndex = 4;
@@ -83,7 +65,7 @@
             // 
             // txtIPv4SecondPlayer
             // 
-            this.txtIPv4SecondPlayer.Location = new System.Drawing.Point(580, 235);
+            this.txtIPv4SecondPlayer.Location = new System.Drawing.Point(198, 224);
             this.txtIPv4SecondPlayer.Name = "txtIPv4SecondPlayer";
             this.txtIPv4SecondPlayer.Size = new System.Drawing.Size(176, 20);
             this.txtIPv4SecondPlayer.TabIndex = 5;
@@ -98,33 +80,80 @@
             this.cmdPlay.UseVisualStyleBackColor = true;
             this.cmdPlay.Click += new System.EventHandler(this.cmdPlay_Click);
             // 
+            // rdbPartLocal
+            // 
+            this.rdbPartLocal.AutoSize = true;
+            this.rdbPartLocal.Checked = true;
+            this.rdbPartLocal.Location = new System.Drawing.Point(33, 40);
+            this.rdbPartLocal.Name = "rdbPartLocal";
+            this.rdbPartLocal.Size = new System.Drawing.Size(81, 17);
+            this.rdbPartLocal.TabIndex = 7;
+            this.rdbPartLocal.TabStop = true;
+            this.rdbPartLocal.Text = "Partie Local";
+            this.rdbPartLocal.UseVisualStyleBackColor = true;
+            // 
+            // rdbPartOnline
+            // 
+            this.rdbPartOnline.AutoSize = true;
+            this.rdbPartOnline.Location = new System.Drawing.Point(33, 90);
+            this.rdbPartOnline.Name = "rdbPartOnline";
+            this.rdbPartOnline.Size = new System.Drawing.Size(92, 17);
+            this.rdbPartOnline.TabIndex = 8;
+            this.rdbPartOnline.Text = "Partie Réseau";
+            this.rdbPartOnline.UseVisualStyleBackColor = true;
+            // 
+            // nudNbCells
+            // 
+            this.nudNbCells.Location = new System.Drawing.Point(379, 305);
+            this.nudNbCells.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.nudNbCells.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudNbCells.Name = "nudNbCells";
+            this.nudNbCells.Size = new System.Drawing.Size(120, 20);
+            this.nudNbCells.TabIndex = 9;
+            this.nudNbCells.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
             // FormNewPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.nudNbCells);
+            this.Controls.Add(this.rdbPartOnline);
+            this.Controls.Add(this.rdbPartLocal);
             this.Controls.Add(this.cmdPlay);
             this.Controls.Add(this.txtIPv4SecondPlayer);
             this.Controls.Add(this.txtNameSecondPlayer);
             this.Controls.Add(this.txtNamePlayer);
             this.Controls.Add(this.txtNamePart);
-            this.Controls.Add(this.cmdPartOnline);
-            this.Controls.Add(this.cmdPartLocal);
             this.Name = "FormNewPart";
             this.Text = "FormNewPart";
+            this.Load += new System.EventHandler(this.FormNewPart_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button cmdPartLocal;
-        private System.Windows.Forms.Button cmdPartOnline;
         private System.Windows.Forms.TextBox txtNamePart;
         private System.Windows.Forms.TextBox txtNamePlayer;
         private System.Windows.Forms.TextBox txtNameSecondPlayer;
         private System.Windows.Forms.TextBox txtIPv4SecondPlayer;
         private System.Windows.Forms.Button cmdPlay;
+        private System.Windows.Forms.RadioButton rdbPartLocal;
+        private System.Windows.Forms.RadioButton rdbPartOnline;
+        private System.Windows.Forms.NumericUpDown nudNbCells;
     }
 }

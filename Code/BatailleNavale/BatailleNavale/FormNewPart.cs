@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+
 using Newtonsoft.Json;
 
 namespace BatailleNavale
@@ -17,6 +19,12 @@ namespace BatailleNavale
 
         public static int test;
 
+        private static string namePlayer;
+        private static string localIP;
+
+        private static int nbCells;
+
+
         private FormPart PartForm;
 
 
@@ -25,48 +33,54 @@ namespace BatailleNavale
             InitializeComponent();
         }
 
-        private void cmdPartLocal_Click(object sender, EventArgs e)
+        private void FormNewPart_Load(object sender, EventArgs e)
         {
-
+            IPAdress();
         }
 
-        private void cmdPartOnline_Click(object sender, EventArgs e)
+        private void IPAdress()
         {
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
 
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily.ToString() == "InterNetwork")
+                {
+                    localIP = ip.ToString();
+                    break;
+                }
+            }
         }
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
-            /*
-            //Phase 1  - creation de l'objet
-            Contact contact = new Contact() { Nom = "Durand", Prenom = "Albert", Mail = "adurand@gmail.com" };
 
-            //Phase 2 - serialisation de l'objet 
-            string jsonSerializedObj = JsonConvert.SerializeObject(contact);
-            File.WriteAllText(@"c:\temp\monfichierResultat.son", jsonSerializedObj); // il faut que le repertoire c:\temp existe
-            */
+            namePlayer = txtNamePlayer.Text;
 
-            
-            try
-            {
-                StreamWriter sw = new StreamWriter("./" + txtNamePart.Text + ".json");
-                
-                sw.WriteLine("{" +
-                    "\"NamePlayer\" : \"" + txtNamePlayer.Text + "\"" +
-                    "}");
-
-
-                sw.Close();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine("Exception: " + exception.Message);
-            }
-            
+            nbCells = Convert.ToInt32(nudNbCells.Value);
 
             this.Hide();
             PartForm = new FormPart();
             PartForm.Show();
         }
+
+        #region Methode Get
+
+        public static string NamePlayer
+        {
+            get { return namePlayer; }
+        }
+
+        public static string LocalIP
+        {
+            get { return localIP; }
+        }
+
+        public static int NbCells
+        {
+            get { return nbCells; }
+        }
+        
+        #endregion
     }
 }
