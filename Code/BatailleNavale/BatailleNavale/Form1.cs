@@ -13,7 +13,6 @@ namespace BatailleNavale
 {
     public partial class Form1 : Form
     {
-
         private bool gameStarted = false;
 
         List<Player> players = new List<Player>();
@@ -32,7 +31,6 @@ namespace BatailleNavale
 
         private FormMenu menuFrom;
 
-
         public Form1()
         {
             InitializeComponent(); 
@@ -41,6 +39,7 @@ namespace BatailleNavale
         private void Form1_Load(object sender, EventArgs e)
         {
 
+
             players.Add(player);
             players.Add(player2);
 
@@ -48,9 +47,13 @@ namespace BatailleNavale
 
             grid1.MouseClick += new MouseEventHandler(ClickOnPictureBox);
 
-            // menuFrom = new FormMenu();
-            // menuFrom.Show();
+           
+            this.Hide();
+            menuFrom = new FormMenu();
+            menuFrom.Show();
+           
             
+
             this.Controls.Add(grid1);
 
             Ship ship = new Ship("Fregate", 2, Orientation.Horizontal);
@@ -67,10 +70,13 @@ namespace BatailleNavale
             }
 
 
+
+
             Timer timer = new Timer();
             timer.Interval = (1); // every 1 millesecond
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
+
 
         }
 
@@ -139,7 +145,9 @@ namespace BatailleNavale
             }
 
         
+            
 
+            
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -184,6 +192,13 @@ namespace BatailleNavale
             gameStarted = true;
         }
 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            menuFrom = new FormMenu();
+            menuFrom.Show();
+        }
 
     }
 }

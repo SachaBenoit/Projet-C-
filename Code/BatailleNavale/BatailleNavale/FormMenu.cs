@@ -12,8 +12,8 @@ namespace BatailleNavale
 {
     public partial class FormMenu : Form
     {
-        private FormNewPart NewPartFrom;
-        private FormChargePart ChargePartFrom;
+        private FormNewPart NewPartForm;
+        private FormChargePart ChargePartForm;
 
         public FormMenu()
         {
@@ -22,19 +22,20 @@ namespace BatailleNavale
 
         private void cmdNewPart_Click(object sender, EventArgs e)
         {
-            NewPartFrom = new FormNewPart();
-            NewPartFrom.Show();
+            this.Hide();
+            NewPartForm = new FormNewPart();
+            NewPartForm.Show();
         }
 
         private void cmdChargePart_Click(object sender, EventArgs e)
         {
-            ChargePartFrom = new FormChargePart();
-            ChargePartFrom.Show();
+            this.Hide();
+            ChargePartForm = new FormChargePart();
+            ChargePartForm.Show();
         }
 
         private void cmdCloseApplication_Click(object sender, EventArgs e)
         {
-            //System.Environment.Exit(1);
             System.Windows.Forms.Application.Exit();
         }
     }
