@@ -36,6 +36,10 @@
             this.rdbPartLocal = new System.Windows.Forms.RadioButton();
             this.rdbPartOnline = new System.Windows.Forms.RadioButton();
             this.nudNbCells = new System.Windows.Forms.NumericUpDown();
+            this.lstShip = new System.Windows.Forms.ListBox();
+            this.cmdAddShip = new System.Windows.Forms.Button();
+            this.cmdDeleteShip = new System.Windows.Forms.Button();
+            this.txtShip = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,7 +110,7 @@
             // 
             this.nudNbCells.Location = new System.Drawing.Point(379, 305);
             this.nudNbCells.Maximum = new decimal(new int[] {
-            12,
+            15,
             0,
             0,
             0});
@@ -117,18 +121,55 @@
             0});
             this.nudNbCells.Name = "nudNbCells";
             this.nudNbCells.Size = new System.Drawing.Size(120, 20);
-            this.nudNbCells.TabIndex = 9;
+            this.nudNbCells.TabIndex = 10;
             this.nudNbCells.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
+            // 
+            // lstShip
+            // 
+            this.lstShip.FormattingEnabled = true;
+            this.lstShip.Location = new System.Drawing.Point(578, 40);
+            this.lstShip.Name = "lstShip";
+            this.lstShip.Size = new System.Drawing.Size(178, 160);
+            this.lstShip.TabIndex = 11;
+            // 
+            // cmdAddShip
+            // 
+            this.cmdAddShip.Location = new System.Drawing.Point(578, 206);
+            this.cmdAddShip.Name = "cmdAddShip";
+            this.cmdAddShip.Size = new System.Drawing.Size(86, 23);
+            this.cmdAddShip.TabIndex = 12;
+            this.cmdAddShip.Text = "Ajouter";
+            this.cmdAddShip.UseVisualStyleBackColor = true;
+            // 
+            // cmdDeleteShip
+            // 
+            this.cmdDeleteShip.Location = new System.Drawing.Point(670, 206);
+            this.cmdDeleteShip.Name = "cmdDeleteShip";
+            this.cmdDeleteShip.Size = new System.Drawing.Size(86, 23);
+            this.cmdDeleteShip.TabIndex = 13;
+            this.cmdDeleteShip.Text = "Supprimer";
+            this.cmdDeleteShip.UseVisualStyleBackColor = true;
+            // 
+            // txtShip
+            // 
+            this.txtShip.Location = new System.Drawing.Point(578, 235);
+            this.txtShip.Name = "txtShip";
+            this.txtShip.Size = new System.Drawing.Size(178, 20);
+            this.txtShip.TabIndex = 14;
             // 
             // FormNewPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtShip);
+            this.Controls.Add(this.cmdDeleteShip);
+            this.Controls.Add(this.cmdAddShip);
+            this.Controls.Add(this.lstShip);
             this.Controls.Add(this.nudNbCells);
             this.Controls.Add(this.rdbPartOnline);
             this.Controls.Add(this.rdbPartLocal);
@@ -155,5 +196,9 @@
         private System.Windows.Forms.RadioButton rdbPartLocal;
         private System.Windows.Forms.RadioButton rdbPartOnline;
         private System.Windows.Forms.NumericUpDown nudNbCells;
+        private System.Windows.Forms.ListBox lstShip;
+        private System.Windows.Forms.Button cmdAddShip;
+        private System.Windows.Forms.Button cmdDeleteShip;
+        private System.Windows.Forms.TextBox txtShip;
     }
 }
