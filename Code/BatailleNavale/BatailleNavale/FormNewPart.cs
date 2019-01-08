@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
-
-using Newtonsoft.Json;
+using System.Net.Sockets;
 
 namespace BatailleNavale
 {
     public partial class FormNewPart : Form
     {
+        private static string namePart;
         private static string namePlayer;
         private static string localIP;
 
@@ -49,7 +49,7 @@ namespace BatailleNavale
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
-
+            namePart = txtNamePart.Text;
             namePlayer = txtNamePlayer.Text;
 
             nbCells = Convert.ToInt32(nudNbCells.Value);
@@ -60,6 +60,11 @@ namespace BatailleNavale
         }
 
         #region Methode Get
+
+        public static string NamePart
+        {
+            get { return namePart; }
+        }
 
         public static string NamePlayer
         {

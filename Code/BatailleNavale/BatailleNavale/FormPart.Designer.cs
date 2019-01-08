@@ -28,22 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cmdSavePart = new System.Windows.Forms.Button();
             this.cmdReady = new System.Windows.Forms.Button();
             this.cmdSetOrientation = new System.Windows.Forms.Button();
             this.lblOrientation = new System.Windows.Forms.Label();
             this.lstPlayerShip = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
-            // 
-            // cmdSavePart
-            // 
-            this.cmdSavePart.Location = new System.Drawing.Point(866, 469);
-            this.cmdSavePart.Name = "cmdSavePart";
-            this.cmdSavePart.Size = new System.Drawing.Size(91, 32);
-            this.cmdSavePart.TabIndex = 0;
-            this.cmdSavePart.Text = "Sauvegarder";
-            this.cmdSavePart.UseVisualStyleBackColor = true;
-            this.cmdSavePart.Click += new System.EventHandler(this.cmdSavePart_Click);
             // 
             // cmdReady
             // 
@@ -93,7 +82,6 @@
             this.Controls.Add(this.cmdSetOrientation);
             this.Controls.Add(this.lblOrientation);
             this.Controls.Add(this.lstPlayerShip);
-            this.Controls.Add(this.cmdSavePart);
             this.Name = "FormPart";
             this.Text = "FormPart";
             this.Load += new System.EventHandler(this.FormPart_Load);
@@ -103,8 +91,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button cmdSavePart;
         private System.Windows.Forms.Button cmdReady;
         private System.Windows.Forms.Button cmdSetOrientation;
         private System.Windows.Forms.Label lblOrientation;

@@ -23,7 +23,6 @@ namespace BatailleNavale
 
         Grid grid;
 
-
         public FormPart()
         {
             InitializeComponent();
@@ -34,9 +33,7 @@ namespace BatailleNavale
             players.Add(player);
             players.Add(player2);
 
-
             grid = new Grid(player, 50, FormNewPart.NbCells, 50, 50);
-
 
             grid.MouseClick += new MouseEventHandler(ClickOnPictureBox);
 
@@ -159,23 +156,52 @@ namespace BatailleNavale
         private void cmdReady_Click(object sender, EventArgs e)
         {
             gameStarted = true;
+            Controls.Remove(cmdReady);
+
+            CreateButtonSave();
+        }
+
+        private void CreateButtonSave()
+        {
+            Button button = new Button();
+
+            button.Name = "cmdSavePart";
+            button.Text = "Sauvegarder";
+            button.Location = new Point(613, 415);
+
+            button.Click += new EventHandler(cmdSavePart_Click);
+
+            Controls.Add(button);
         }
 
         private void cmdSavePart_Click(object sender, EventArgs e)
         {
-            /*
-            try
-            {
-                StreamWriter sw = new StreamWriter("./Test.json");
-                sw.WriteLine("{}");
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
 
-                sw.Close();
-            }
-            catch (Exception exception)
+            using (JsonWriter writer = new JsonTextWriter(sw))
             {
-                Console.WriteLine("Exception: " + exception.Message);
+                writer.Formatting = Formatting.Indented;
+
+                writer.WriteStartObject();
+
+                writer.WritePropertyName("Partname");
+                writer.WriteValue(FormNewPart.NamePart);
+
+                writer.WritePropertyName("Playername");
+                writer.WriteValue(FormNewPart.NamePlayer);
+
+                writer.WritePropertyName("Ships");
+                writer.WriteStartArray();
+                writer.WriteValue("1");
+                writer.WriteValue("3");
+                writer.WriteValue("A2");
+                writer.WriteEnd();
+                writer.WriteEndObject();
             }
-            */
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + FormNewPart.NamePart + ".json");
+            file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
+            file.Close();
         }
     }
 }
