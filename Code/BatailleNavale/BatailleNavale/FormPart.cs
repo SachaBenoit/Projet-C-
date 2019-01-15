@@ -182,22 +182,56 @@ namespace BatailleNavale
 
                 writer.WriteStartObject();
 
-                writer.WritePropertyName("Partname");
+                writer.WritePropertyName("PartName");
                 writer.WriteValue(FormNewPart.NamePart);
 
-                writer.WritePropertyName("Playername");
-                writer.WriteValue(FormNewPart.NamePlayer);
+                writer.WritePropertyName("PlayerName");
+                writer.WriteValue(player.GetName());
 
+                writer.WritePropertyName("SizeGrid");
+                writer.WriteValue(grid.NbCells);
+                
                 writer.WritePropertyName("Ships");
-                writer.WriteStartArray();
-                writer.WriteValue("1");
-                writer.WriteValue("3");
-                writer.WriteValue("A2");
-                writer.WriteEnd();
+                writer.WriteStartObject();
+
+                foreach (Ship playerShip in player.Ships)
+                {
+                    int NumPosition = 0;
+
+                    writer.WritePropertyName(playerShip.Name);
+                    writer.WriteStartArray();
+                    
+                    writer.WriteValue(playerShip.Name);
+                    writer.WriteValue(playerShip.Size);
+                    
+                    writer.WriteStartObject();
+
+                    foreach (KeyValuePair<string, bool> position in playerShip.Positions)
+                    {
+                        writer.WritePropertyName("Position" + NumPosition);
+                        writer.WriteStartArray();
+
+                        writer.WriteValue(position.Key);
+                        writer.WriteValue(position.Value);
+
+                        writer.WriteEnd();
+
+                        NumPosition++;
+                    }
+                    
+                    writer.WriteEndObject();
+                    
+                    writer.WriteValue(playerShip.Orientation);
+                    
+                    writer.WriteEnd();
+                }
+
+                writer.WriteEndObject();
+                
                 writer.WriteEndObject();
             }
 
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + FormNewPart.NamePart + ".json");
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"sauvegarde\" + FormNewPart.NamePart + ".json");
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
             file.Close();
         }
