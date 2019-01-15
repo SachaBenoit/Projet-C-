@@ -130,7 +130,10 @@ namespace BatailleNavale
             }
             else
             {
-                grid.PlaceShip(player.Ships[lstPlayerShip.SelectedIndex]);
+                if(lstPlayerShip.SelectedIndex != -1)
+                {
+                    grid.PlaceShip(player.Ships[lstPlayerShip.SelectedIndex]);
+                }
             }
 
 
