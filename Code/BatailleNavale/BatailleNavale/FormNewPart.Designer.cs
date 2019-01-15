@@ -38,9 +38,11 @@
             this.nudNbCells = new System.Windows.Forms.NumericUpDown();
             this.lstShip = new System.Windows.Forms.ListBox();
             this.cmdAddShip = new System.Windows.Forms.Button();
-            this.cmdDeleteShip = new System.Windows.Forms.Button();
+            this.cmdRemoveShip = new System.Windows.Forms.Button();
             this.txtShip = new System.Windows.Forms.TextBox();
+            this.nudSizeShip = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSizeShip)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNamePart
@@ -144,30 +146,56 @@
             this.cmdAddShip.TabIndex = 12;
             this.cmdAddShip.Text = "Ajouter";
             this.cmdAddShip.UseVisualStyleBackColor = true;
+            this.cmdAddShip.Click += new System.EventHandler(this.cmdAddShip_Click);
             // 
-            // cmdDeleteShip
+            // cmdRemoveShip
             // 
-            this.cmdDeleteShip.Location = new System.Drawing.Point(670, 206);
-            this.cmdDeleteShip.Name = "cmdDeleteShip";
-            this.cmdDeleteShip.Size = new System.Drawing.Size(86, 23);
-            this.cmdDeleteShip.TabIndex = 13;
-            this.cmdDeleteShip.Text = "Supprimer";
-            this.cmdDeleteShip.UseVisualStyleBackColor = true;
+            this.cmdRemoveShip.Location = new System.Drawing.Point(670, 206);
+            this.cmdRemoveShip.Name = "cmdRemoveShip";
+            this.cmdRemoveShip.Size = new System.Drawing.Size(86, 23);
+            this.cmdRemoveShip.TabIndex = 13;
+            this.cmdRemoveShip.Text = "Supprimer";
+            this.cmdRemoveShip.UseVisualStyleBackColor = true;
+            this.cmdRemoveShip.Click += new System.EventHandler(this.cmdRemoveShip_Click);
             // 
             // txtShip
             // 
             this.txtShip.Location = new System.Drawing.Point(578, 235);
             this.txtShip.Name = "txtShip";
-            this.txtShip.Size = new System.Drawing.Size(178, 20);
+            this.txtShip.Size = new System.Drawing.Size(132, 20);
             this.txtShip.TabIndex = 14;
+            this.txtShip.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtShip_KeyDown);
+            // 
+            // nudSizeShip
+            // 
+            this.nudSizeShip.Location = new System.Drawing.Point(716, 235);
+            this.nudSizeShip.Maximum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.nudSizeShip.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudSizeShip.Name = "nudSizeShip";
+            this.nudSizeShip.Size = new System.Drawing.Size(40, 20);
+            this.nudSizeShip.TabIndex = 15;
+            this.nudSizeShip.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // FormNewPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.nudSizeShip);
             this.Controls.Add(this.txtShip);
-            this.Controls.Add(this.cmdDeleteShip);
+            this.Controls.Add(this.cmdRemoveShip);
             this.Controls.Add(this.cmdAddShip);
             this.Controls.Add(this.lstShip);
             this.Controls.Add(this.nudNbCells);
@@ -182,6 +210,7 @@
             this.Text = "FormNewPart";
             this.Load += new System.EventHandler(this.FormNewPart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSizeShip)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -198,7 +227,8 @@
         private System.Windows.Forms.NumericUpDown nudNbCells;
         private System.Windows.Forms.ListBox lstShip;
         private System.Windows.Forms.Button cmdAddShip;
-        private System.Windows.Forms.Button cmdDeleteShip;
+        private System.Windows.Forms.Button cmdRemoveShip;
         private System.Windows.Forms.TextBox txtShip;
+        private System.Windows.Forms.NumericUpDown nudSizeShip;
     }
 }

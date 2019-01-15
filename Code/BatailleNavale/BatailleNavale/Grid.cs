@@ -23,8 +23,6 @@ namespace BatailleNavale
         List<Ship> placedShips = new List<Ship>();
 
         Bitmap flag;
-       
-
 
         string lastPosition = "";
 
@@ -198,7 +196,6 @@ namespace BatailleNavale
 
         }
 
-
         private void DrawShips()
         {
 
@@ -219,6 +216,8 @@ namespace BatailleNavale
 
                 int hPos = System.Convert.ToChar(ship.Getpositions()[0].Substring(0, 1)) - 64;
                 int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, 1));
+
+                //int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, 2));            A modifier
 
                 if (ship.Orientation == Orientation.Horizontal)
                 {

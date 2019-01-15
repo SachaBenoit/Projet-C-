@@ -34,52 +34,30 @@ namespace BatailleNavale
             players.Add(player2);
 
             grid = new Grid(player, 50, FormNewPart.NbCells, 50, 50);
-
             grid.MouseClick += new MouseEventHandler(ClickOnPictureBox);
-
-
-
+            
             this.Controls.Add(grid);
 
-            /*
-            Ship ship = new Ship("Fregate", 2, Orientation.Horizontal);
-            Ship ship2 = new Ship("porte-avion", 3, Orientation.Horizontal);
-            Ship ship3 = new Ship("Fregate", 2, Orientation.Horizontal);
-            */
-
-            player.AddShip(new Ship("Porte-avion", 5 , Orientation.Horizontal));
-            player.AddShip(new Ship("Croiseur", 4 , Orientation.Horizontal));
-            player.AddShip(new Ship("Contre-torpilleur", 3 , Orientation.Horizontal));
-            player.AddShip(new Ship("Sous-marin", 3 , Orientation.Horizontal));
-            player.AddShip(new Ship("Torpilleur", 2 , Orientation.Horizontal));
-
-            /*
-            player.AddShip(ship);
-            player.AddShip(ship2);
-            player.AddShip(ship3);
-            */
+            foreach (Tuple<string, int> item in FormNewPart.Ship)
+            {
+                player.AddShip(new Ship(item.Item1, item.Item2, Orientation.Horizontal));
+            }
 
             foreach (Ship playerShip in player.Ships)
             {
                 lstPlayerShip.Items.Add(playerShip.Name + " " + playerShip.Size + " cases");
             }
 
-
-
-
             Timer timer = new Timer();
             timer.Interval = (1); // every 1 millesecond
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
-
-
         }
 
         public void ClickOnPictureBox(object sender, MouseEventArgs e)
         {
             PictureBox pbx = sender as PictureBox;
-
-
+            
             Point mouse_position = new Point(); // position de la souris par rapport à la grille
             mouse_position.X = e.X;
             mouse_position.Y = e.Y;
@@ -94,7 +72,6 @@ namespace BatailleNavale
 
             int nbCells_x = pictureBox_width / grid.CellSize;
             int nbCells_y = pictureBox_height / grid.CellSize;
-
 
             //décompose la grille pour la mettre sous forme de cellule (A1, D4)
             for (int i = 0, ii = 0; i < pictureBox_width; i += grid.CellSize, ii++)
@@ -122,37 +99,27 @@ namespace BatailleNavale
 
             if (gameStarted)
             {
+                bool hited = true;
+
                 Point point = new Point();
                 point = grid.cellToPositions(grid.LastPosition);
-                if (player2.Shoot(player, grid.LastPosition))
-                {
-                    Target target = new Target(point.X, point.Y, grid.CellSize, grid.CellSize, true);
-                    this.Controls.Add(target);
-                    target.BringToFront();
 
-                }
-                else
-                {
-                    Target target = new Target(point.X, point.Y, grid.CellSize, grid.CellSize, false);
-                    this.Controls.Add(target);
-                    target.BringToFront();
-                }
+                if (!player2.Shoot(player, grid.LastPosition))
+                    hited = false;
+
+                Target target = new Target(point.X, point.Y, grid.CellSize, grid.CellSize, hited);
+                this.Controls.Add(target);
+                target.BringToFront();
             }
             else
             {
                 grid.PlaceShip(player.Ships[lstPlayerShip.SelectedIndex]);
             }
-
-
-
-
-
         }
 
         private void timer_Tick(object sender, EventArgs e)
         {
         }
-
 
         private void lstPlayerShip_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -229,6 +196,7 @@ namespace BatailleNavale
                 writer.WriteEnd();
                 writer.WriteEndObject();
             }
+
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + FormNewPart.NamePart + ".json");
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
             file.Close();

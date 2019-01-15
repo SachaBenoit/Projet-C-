@@ -15,8 +15,8 @@ namespace BatailleNavale
 {
     public partial class FormNewPart : Form
     {
-        public static int test;
-        
+        private static List<Tuple<string, int>> listShip = new List<Tuple<string, int>>();
+
         private static string namePart;
         private static string namePlayer;
         private static string localIP;
@@ -32,6 +32,17 @@ namespace BatailleNavale
 
         private void FormNewPart_Load(object sender, EventArgs e)
         {
+            listShip.Add(new Tuple<string, int>("Porte-avion", 5));
+            listShip.Add(new Tuple<string, int>("Croiseur", 4));
+            listShip.Add(new Tuple<string, int>("Contre-torpilleur", 3));
+            listShip.Add(new Tuple<string, int>("Sous-marin", 3));
+            listShip.Add(new Tuple<string, int>("Torpilleur", 2));
+            
+            foreach (Tuple<string, int> item in listShip)
+            {
+                lstShip.Items.Add(item);
+            }
+
             IPAdress();
         }
 
@@ -49,11 +60,6 @@ namespace BatailleNavale
             }
         }
 
-        #region Methode Ship
-
-        #endregion
-
-
         private void cmdPlay_Click(object sender, EventArgs e)
         {
             namePart = txtNamePart.Text;
@@ -65,6 +71,38 @@ namespace BatailleNavale
             PartForm = new FormPart();
             PartForm.Show();
         }
+
+        #region Methode Ship
+
+        private void AddShip(string Text, decimal Size)
+        {
+            if (Text != "")
+            {
+                listShip.Add(new Tuple<string, int>(Text, Convert.ToInt32(Size)));
+                lstShip.Items.Add(listShip.Last());
+
+                txtShip.Clear();
+            }
+        }
+
+        private void cmdAddShip_Click(object sender, EventArgs e)
+        {
+            AddShip(txtShip.Text, nudSizeShip.Value);
+        }
+
+        private void txtShip_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                AddShip(txtShip.Text, nudSizeShip.Value);
+        }
+
+        private void cmdRemoveShip_Click(object sender, EventArgs e)
+        {
+            listShip.RemoveAt(lstShip.SelectedIndex);
+            lstShip.Items.Remove(lstShip.SelectedItem);
+        }
+
+        #endregion
 
         #region Methode Get
 
@@ -87,7 +125,12 @@ namespace BatailleNavale
         {
             get { return nbCells; }
         }
-        
+
+        public static List<Tuple<string, int>> Ship
+        {
+            get { return listShip; }
+        }
+
         #endregion
     }
 }
