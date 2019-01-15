@@ -1,6 +1,6 @@
 ﻿namespace BatailleNavale
 {
-    partial class FormChargePart
+    partial class FormListPart
     {
         /// <summary>
         /// Required designer variable.
@@ -50,15 +50,16 @@
             this.cmdPlay.UseVisualStyleBackColor = true;
             this.cmdPlay.Click += new System.EventHandler(this.cmdPlay_Click);
             // 
-            // FormChargePart
+            // FormListPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(344, 450);
             this.Controls.Add(this.cmdPlay);
             this.Controls.Add(this.lstPart);
-            this.Name = "FormChargePart";
-            this.Text = "FormChargePart";
+            this.Name = "FormListPart";
+            this.Text = "FormListPart";
+            this.Load += new System.EventHandler(this.FormListPart_Load);
             this.ResumeLayout(false);
 
         }

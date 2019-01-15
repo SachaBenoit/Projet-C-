@@ -13,7 +13,7 @@ namespace BatailleNavale
     public partial class FormMenu : Form
     {
         private FormNewPart NewPartForm;
-        private FormChargePart ChargePartForm;
+        private FormListPart ListPartForm;
 
         public FormMenu()
         {
@@ -27,11 +27,11 @@ namespace BatailleNavale
             NewPartForm.Show();
         }
 
-        private void cmdChargePart_Click(object sender, EventArgs e)
+        private void cmdListPart_Click(object sender, EventArgs e)
         {
             this.Hide();
-            ChargePartForm = new FormChargePart();
-            ChargePartForm.Show();
+            ListPartForm = new FormListPart();
+            ListPartForm.Show();
         }
 
         private void cmdCloseApplication_Click(object sender, EventArgs e)
