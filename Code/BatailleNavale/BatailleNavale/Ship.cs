@@ -116,6 +116,8 @@ namespace BatailleNavale
             {
                 vOrigin = System.Convert.ToChar(origin.Substring(0, 1));
                 hOrigin = System.Convert.ToInt32(origin.Substring(1, 1));
+
+                //hOrigin = System.Convert.ToInt32(origin.Substring(1, origin.Length - 1));         //A modifier
             }
             catch (Exception e)
             {
