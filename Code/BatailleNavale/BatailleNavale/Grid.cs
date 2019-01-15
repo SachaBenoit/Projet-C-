@@ -171,15 +171,17 @@ namespace BatailleNavale
         {
             Point point = new Point();
             int hPos = System.Convert.ToChar(cell.Substring(0, 1)) - 64;
-            int vPos = System.Convert.ToInt32(cell.Substring(1, 1));
+            int vPos = System.Convert.ToInt32(cell.Substring(1, cell.Length - 1));
 
             point.X = CellSize * hPos + 1;
             point.Y = CellSize * vPos + 1;
 
-
             return point;
         }
 
+        /// <summary>
+        /// Efface ce qu'il y a de dessiner sur la grille 
+        /// </summary>
         public void CleanGrid()
         {
             Graphics flagGraphics = Graphics.FromImage(flag);
@@ -215,33 +217,27 @@ namespace BatailleNavale
                 Point origin = new Point(); 
 
                 int hPos = System.Convert.ToChar(ship.Getpositions()[0].Substring(0, 1)) - 64;
-                int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, 1));
-
-                //int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, 2));            A modifier
-
-                if (ship.Orientation == Orientation.Horizontal)
-                {
-                    origin.X = (hPos - 1) * cellSize + 2;
-                    origin.Y = (vPos - 1) * cellSize + cellSize / 3;
-                }
-                else
-                {
-                    origin.Y = (vPos - 1) * cellSize + 2;
-                    origin.X = (hPos - 1) * cellSize + cellSize / 3;
-                }
-
+                //int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, 1));
+                int vPos = System.Convert.ToInt32(ship.Getpositions()[0].Substring(1, ship.Getpositions()[0].Length - 1));
 
 
                 int shipWidth = 0;
                 int shipHeight = 0;
 
+                
                 if (ship.Orientation == Orientation.Horizontal)
                 {
+                    origin.X = (hPos - 1) * cellSize + 2;
+                    origin.Y = (vPos - 1) * cellSize + cellSize / 3;
+
                     shipHeight = cellSize / 3;
                     shipWidth = ship.Size * cellSize - 3;
                 }
                 else
                 {
+                    origin.Y = (vPos - 1) * cellSize + 2;
+                    origin.X = (hPos - 1) * cellSize + cellSize / 3;
+
                     shipWidth = cellSize / 3;
                     shipHeight = ship.Size * cellSize - 3;
                 }

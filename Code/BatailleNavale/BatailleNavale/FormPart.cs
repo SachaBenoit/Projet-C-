@@ -18,7 +18,7 @@ namespace BatailleNavale
 
         List<Player> players = new List<Player>();
 
-        Player player = new Player(FormNewPart.NamePlayer, FormNewPart.LocalIP);
+        Player player = new Player(FormNewPart.NamePlayer, "192.168.0.1");
         Player player2 = new Player("robot", "192.168.0.2");
 
         Grid grid;
@@ -48,12 +48,14 @@ namespace BatailleNavale
                 lstPlayerShip.Items.Add(playerShip.Name + " " + playerShip.Size + " cases");
             }
 
-            Timer timer = new Timer();
-            timer.Interval = (1); // every 1 millesecond
-            timer.Tick += new EventHandler(timer_Tick);
-            timer.Start();
+
+            if(FormNewPart.IsNetwork)
+            {
+
+            }
         }
 
+        #region public methods
         public void ClickOnPictureBox(object sender, MouseEventArgs e)
         {
             PictureBox pbx = sender as PictureBox;
@@ -94,7 +96,7 @@ namespace BatailleNavale
                 break;
             }
 
-            //position du joueur
+            //position du tir du joueur
             grid.LastPosition = grid.HorizontalPosition.ToString() + grid.VerticalPosition;
 
             if (gameStarted)
@@ -105,8 +107,10 @@ namespace BatailleNavale
                 point = grid.cellToPositions(grid.LastPosition);
 
                 if (!player2.Shoot(player, grid.LastPosition))
+                {
                     hited = false;
-
+                }
+                    
                 Target target = new Target(point.X, point.Y, grid.CellSize, grid.CellSize, hited);
                 this.Controls.Add(target);
                 target.BringToFront();
@@ -119,11 +123,9 @@ namespace BatailleNavale
                 }
             }
         }
+        #endregion
 
-        private void timer_Tick(object sender, EventArgs e)
-        {
-        }
-
+        #region private methods
         private void lstPlayerShip_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -204,5 +206,6 @@ namespace BatailleNavale
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
             file.Close();
         }
+        #endregion
     }
 }

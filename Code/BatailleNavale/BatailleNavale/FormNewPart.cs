@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.NetworkInformation;
 
 namespace BatailleNavale
 {
@@ -19,11 +20,55 @@ namespace BatailleNavale
 
         private static string namePart;
         private static string namePlayer;
-        private static string localIP;
 
         private static int nbCells;
 
+        private static string computerName;
+
         private FormPart PartForm;
+
+        private static bool isNetwork = false;
+
+
+        #region Accesseurs
+
+        public static string NamePart
+        {
+            get { return namePart; }
+        }
+
+        public static string NamePlayer
+        {
+            get { return namePlayer; }
+        }
+
+        public static int NbCells
+        {
+            get { return nbCells; }
+        }
+
+        public static List<Tuple<string, int>> Ship
+        {
+            get { return listShip; }
+        }
+
+        public static string ComputerName
+        {
+            get
+            {
+                return computerName;
+            }
+        }
+
+        public static bool IsNetwork
+        {
+            get
+            {
+                return isNetwork;
+            }
+        }
+
+        #endregion
 
         public FormNewPart()
         {
@@ -32,38 +77,69 @@ namespace BatailleNavale
 
         private void FormNewPart_Load(object sender, EventArgs e)
         {
+            
             listShip.Add(new Tuple<string, int>("Porte-avion", 5));
             listShip.Add(new Tuple<string, int>("Croiseur", 4));
             listShip.Add(new Tuple<string, int>("Contre-torpilleur", 3));
             listShip.Add(new Tuple<string, int>("Sous-marin", 3));
             listShip.Add(new Tuple<string, int>("Torpilleur", 2));
-            
+
             foreach (Tuple<string, int> item in listShip)
             {
                 lstShip.Items.Add(item);
             }
 
-            IPAdress();
+            gboxGameMode.Controls.Add(rdbPartOnline);
+            gboxGameMode.Controls.Add(rdbPartLocal);
+
+            gboxPlayerMode.Controls.Add(rdbHost);
+            gboxPlayerMode.Controls.Add(rdbClient);
+
+            gboxPlayerMode.Visible = false;
+
+            txtComputerName.Visible = false;
+            lblComputerName.Visible = false;
         }
 
-        private void IPAdress()
-        {
-            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
-
-            foreach (IPAddress ip in host.AddressList)
-            {
-                if (ip.AddressFamily.ToString() == "InterNetwork")
-                {
-                    localIP = ip.ToString();
-                    break;
-                }
-            }
-        }
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
+            
+
+
+            if (rdbPartOnline.Checked)
+            {
+                if (rdbHost.Checked)
+                {
+                    computerName = Environment.MachineName;
+                    StartGame();
+                }
+                else if (rdbClient.Checked)
+                {
+                    if (PingTest())//si le nom de l'ordinateur est pingable
+                    {
+                        computerName = txtComputerName.Text;
+                        StartGame();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez choisir un type de joueur");
+                }
+            }
+            else
+            {
+                StartGame();
+            }
+
+
+
+        }
+
+        private void StartGame()
+        {
             namePart = txtNamePart.Text;
-            namePlayer = txtNamePlayer.Text;
+            namePlayer = txtPlayerOne.Text;
 
             nbCells = Convert.ToInt32(nudNbCells.Value);
 
@@ -104,33 +180,78 @@ namespace BatailleNavale
 
         #endregion
 
-        #region Methode Get
 
-        public static string NamePart
+
+        private void rdbPartOnline_CheckedChanged(object sender, EventArgs e)
         {
-            get { return namePart; }
+            RadioButton rb = sender as RadioButton;
+
+            if (rb.Checked)
+            {
+                isNetwork = true;
+
+                gboxPlayerMode.Visible = true;
+            }
+            else
+            {
+                isNetwork = false;
+
+                gboxPlayerMode.Visible = false;
+
+                txtComputerName.Visible = false;
+                lblComputerName.Visible = false;
+            }
         }
 
-        public static string NamePlayer
+        private void rdbClient_CheckedChanged(object sender, EventArgs e)
         {
-            get { return namePlayer; }
+            RadioButton rb = sender as RadioButton;
+
+            if (rb.Checked)
+            {
+                txtComputerName.Visible = true;
+                lblComputerName.Visible = true;
+            }
+            else
+            {
+                txtComputerName.Visible = false;
+                lblComputerName.Visible = false;
+
+
+            }
         }
 
-        public static string LocalIP
+        /// <summary>
+        /// test si le nom (ou l'adresse ip) de l'ordinateur est pingable 
+        /// </summary>
+        /// <returns></returns>
+        private bool PingTest()
         {
-            get { return localIP; }
-        }
+            Ping ping = new Ping();
+            bool pingable = false;
 
-        public static int NbCells
-        {
-            get { return nbCells; }
-        }
+            try
+            {
+                PingReply reply = ping.Send(txtComputerName.Text); //ping la machine
+                pingable = reply.Status == IPStatus.Success; // si le ping à fonctionné
+            }
+            catch(PingException)
+            {
 
-        public static List<Tuple<string, int>> Ship
-        {
-            get { return listShip; }
-        }
+            }
+            catch(ArgumentNullException)
+            {
+                MessageBox.Show("Le champ \"Nom de la machine\" ne peut pas être vide");
+            }
+            finally
+            {
+                if(ping != null)
+                {
+                    ping.Dispose();
+                }
+            }
 
-        #endregion
+            return pingable;
+        }
     }
 }

@@ -29,9 +29,8 @@
         private void InitializeComponent()
         {
             this.txtNamePart = new System.Windows.Forms.TextBox();
-            this.txtNamePlayer = new System.Windows.Forms.TextBox();
-            this.txtNameSecondPlayer = new System.Windows.Forms.TextBox();
-            this.txtIPv4SecondPlayer = new System.Windows.Forms.TextBox();
+            this.txtPlayerOne = new System.Windows.Forms.TextBox();
+            this.txtPlayerTwo = new System.Windows.Forms.TextBox();
             this.cmdPlay = new System.Windows.Forms.Button();
             this.rdbPartLocal = new System.Windows.Forms.RadioButton();
             this.rdbPartOnline = new System.Windows.Forms.RadioButton();
@@ -41,40 +40,43 @@
             this.cmdRemoveShip = new System.Windows.Forms.Button();
             this.txtShip = new System.Windows.Forms.TextBox();
             this.nudSizeShip = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtComputerName = new System.Windows.Forms.TextBox();
+            this.rdbHost = new System.Windows.Forms.RadioButton();
+            this.rdbClient = new System.Windows.Forms.RadioButton();
+            this.gboxGameMode = new System.Windows.Forms.GroupBox();
+            this.gboxPlayerMode = new System.Windows.Forms.GroupBox();
+            this.lblPlayerTwo = new System.Windows.Forms.Label();
+            this.lblPlayerOne = new System.Windows.Forms.Label();
+            this.lblPartyName = new System.Windows.Forms.Label();
+            this.lblComputerName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSizeShip)).BeginInit();
+            this.gboxGameMode.SuspendLayout();
+            this.gboxPlayerMode.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtNamePart
             // 
-            this.txtNamePart.Location = new System.Drawing.Point(198, 40);
+            this.txtNamePart.Location = new System.Drawing.Point(24, 29);
             this.txtNamePart.Name = "txtNamePart";
             this.txtNamePart.Size = new System.Drawing.Size(176, 20);
             this.txtNamePart.TabIndex = 2;
-            this.txtNamePart.Text = "Nom de la partie";
+            this.txtNamePart.Text = "partie 1 ";
             // 
-            // txtNamePlayer
+            // txtPlayerOne
             // 
-            this.txtNamePlayer.Location = new System.Drawing.Point(198, 100);
-            this.txtNamePlayer.Name = "txtNamePlayer";
-            this.txtNamePlayer.Size = new System.Drawing.Size(176, 20);
-            this.txtNamePlayer.TabIndex = 3;
-            this.txtNamePlayer.Text = "Nom du joueur";
+            this.txtPlayerOne.Location = new System.Drawing.Point(24, 89);
+            this.txtPlayerOne.Name = "txtPlayerOne";
+            this.txtPlayerOne.Size = new System.Drawing.Size(176, 20);
+            this.txtPlayerOne.TabIndex = 3;
             // 
-            // txtNameSecondPlayer
+            // txtPlayerTwo
             // 
-            this.txtNameSecondPlayer.Location = new System.Drawing.Point(198, 164);
-            this.txtNameSecondPlayer.Name = "txtNameSecondPlayer";
-            this.txtNameSecondPlayer.Size = new System.Drawing.Size(176, 20);
-            this.txtNameSecondPlayer.TabIndex = 4;
-            this.txtNameSecondPlayer.Text = "Nom du deuxième joueur";
-            // 
-            // txtIPv4SecondPlayer
-            // 
-            this.txtIPv4SecondPlayer.Location = new System.Drawing.Point(198, 224);
-            this.txtIPv4SecondPlayer.Name = "txtIPv4SecondPlayer";
-            this.txtIPv4SecondPlayer.Size = new System.Drawing.Size(176, 20);
-            this.txtIPv4SecondPlayer.TabIndex = 5;
+            this.txtPlayerTwo.Location = new System.Drawing.Point(24, 153);
+            this.txtPlayerTwo.Name = "txtPlayerTwo";
+            this.txtPlayerTwo.Size = new System.Drawing.Size(176, 20);
+            this.txtPlayerTwo.TabIndex = 4;
             // 
             // cmdPlay
             // 
@@ -90,7 +92,7 @@
             // 
             this.rdbPartLocal.AutoSize = true;
             this.rdbPartLocal.Checked = true;
-            this.rdbPartLocal.Location = new System.Drawing.Point(33, 40);
+            this.rdbPartLocal.Location = new System.Drawing.Point(9, 19);
             this.rdbPartLocal.Name = "rdbPartLocal";
             this.rdbPartLocal.Size = new System.Drawing.Size(81, 17);
             this.rdbPartLocal.TabIndex = 7;
@@ -101,16 +103,17 @@
             // rdbPartOnline
             // 
             this.rdbPartOnline.AutoSize = true;
-            this.rdbPartOnline.Location = new System.Drawing.Point(33, 90);
+            this.rdbPartOnline.Location = new System.Drawing.Point(9, 42);
             this.rdbPartOnline.Name = "rdbPartOnline";
             this.rdbPartOnline.Size = new System.Drawing.Size(92, 17);
             this.rdbPartOnline.TabIndex = 8;
             this.rdbPartOnline.Text = "Partie Réseau";
             this.rdbPartOnline.UseVisualStyleBackColor = true;
+            this.rdbPartOnline.CheckedChanged += new System.EventHandler(this.rdbPartOnline_CheckedChanged);
             // 
             // nudNbCells
             // 
-            this.nudNbCells.Location = new System.Drawing.Point(379, 305);
+            this.nudNbCells.Location = new System.Drawing.Point(24, 221);
             this.nudNbCells.Maximum = new decimal(new int[] {
             15,
             0,
@@ -188,29 +191,135 @@
             0,
             0});
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 205);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Taille de la grille : ";
+            // 
+            // txtComputerName
+            // 
+            this.txtComputerName.Location = new System.Drawing.Point(379, 399);
+            this.txtComputerName.Name = "txtComputerName";
+            this.txtComputerName.Size = new System.Drawing.Size(153, 20);
+            this.txtComputerName.TabIndex = 17;
+            // 
+            // rdbHost
+            // 
+            this.rdbHost.AutoSize = true;
+            this.rdbHost.Location = new System.Drawing.Point(11, 26);
+            this.rdbHost.Name = "rdbHost";
+            this.rdbHost.Size = new System.Drawing.Size(48, 17);
+            this.rdbHost.TabIndex = 18;
+            this.rdbHost.TabStop = true;
+            this.rdbHost.Text = "Hôte";
+            this.rdbHost.UseVisualStyleBackColor = true;
+            // 
+            // rdbClient
+            // 
+            this.rdbClient.AutoSize = true;
+            this.rdbClient.Location = new System.Drawing.Point(11, 49);
+            this.rdbClient.Name = "rdbClient";
+            this.rdbClient.Size = new System.Drawing.Size(51, 17);
+            this.rdbClient.TabIndex = 19;
+            this.rdbClient.TabStop = true;
+            this.rdbClient.Text = "Client";
+            this.rdbClient.UseVisualStyleBackColor = true;
+            this.rdbClient.CheckedChanged += new System.EventHandler(this.rdbClient_CheckedChanged);
+            // 
+            // gboxGameMode
+            // 
+            this.gboxGameMode.Controls.Add(this.rdbPartOnline);
+            this.gboxGameMode.Controls.Add(this.rdbPartLocal);
+            this.gboxGameMode.Location = new System.Drawing.Point(24, 341);
+            this.gboxGameMode.Name = "gboxGameMode";
+            this.gboxGameMode.Size = new System.Drawing.Size(145, 80);
+            this.gboxGameMode.TabIndex = 20;
+            this.gboxGameMode.TabStop = false;
+            this.gboxGameMode.Text = "Mode de jeu";
+            // 
+            // gboxPlayerMode
+            // 
+            this.gboxPlayerMode.Controls.Add(this.rdbClient);
+            this.gboxPlayerMode.Controls.Add(this.rdbHost);
+            this.gboxPlayerMode.Location = new System.Drawing.Point(198, 341);
+            this.gboxPlayerMode.Name = "gboxPlayerMode";
+            this.gboxPlayerMode.Size = new System.Drawing.Size(145, 80);
+            this.gboxPlayerMode.TabIndex = 21;
+            this.gboxPlayerMode.TabStop = false;
+            this.gboxPlayerMode.Text = "Jouer en tant que ";
+            // 
+            // lblPlayerTwo
+            // 
+            this.lblPlayerTwo.AutoSize = true;
+            this.lblPlayerTwo.Location = new System.Drawing.Point(26, 137);
+            this.lblPlayerTwo.Name = "lblPlayerTwo";
+            this.lblPlayerTwo.Size = new System.Drawing.Size(83, 13);
+            this.lblPlayerTwo.TabIndex = 22;
+            this.lblPlayerTwo.Text = "nom du joueur 2";
+            // 
+            // lblPlayerOne
+            // 
+            this.lblPlayerOne.AutoSize = true;
+            this.lblPlayerOne.Location = new System.Drawing.Point(26, 73);
+            this.lblPlayerOne.Name = "lblPlayerOne";
+            this.lblPlayerOne.Size = new System.Drawing.Size(80, 13);
+            this.lblPlayerOne.TabIndex = 23;
+            this.lblPlayerOne.Text = "nom du joueur1";
+            // 
+            // lblPartyName
+            // 
+            this.lblPartyName.AutoSize = true;
+            this.lblPartyName.Location = new System.Drawing.Point(24, 13);
+            this.lblPartyName.Name = "lblPartyName";
+            this.lblPartyName.Size = new System.Drawing.Size(82, 13);
+            this.lblPartyName.TabIndex = 24;
+            this.lblPartyName.Text = "nom de la partie";
+            // 
+            // lblComputerName
+            // 
+            this.lblComputerName.AutoSize = true;
+            this.lblComputerName.Location = new System.Drawing.Point(379, 383);
+            this.lblComputerName.Name = "lblComputerName";
+            this.lblComputerName.Size = new System.Drawing.Size(122, 13);
+            this.lblComputerName.TabIndex = 25;
+            this.lblComputerName.Text = "Nom de la machine hôte";
+            // 
             // FormNewPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblComputerName);
+            this.Controls.Add(this.lblPartyName);
+            this.Controls.Add(this.lblPlayerOne);
+            this.Controls.Add(this.lblPlayerTwo);
+            this.Controls.Add(this.txtComputerName);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.nudSizeShip);
             this.Controls.Add(this.txtShip);
             this.Controls.Add(this.cmdRemoveShip);
             this.Controls.Add(this.cmdAddShip);
             this.Controls.Add(this.lstShip);
             this.Controls.Add(this.nudNbCells);
-            this.Controls.Add(this.rdbPartOnline);
-            this.Controls.Add(this.rdbPartLocal);
             this.Controls.Add(this.cmdPlay);
-            this.Controls.Add(this.txtIPv4SecondPlayer);
-            this.Controls.Add(this.txtNameSecondPlayer);
-            this.Controls.Add(this.txtNamePlayer);
+            this.Controls.Add(this.txtPlayerTwo);
+            this.Controls.Add(this.txtPlayerOne);
             this.Controls.Add(this.txtNamePart);
+            this.Controls.Add(this.gboxGameMode);
+            this.Controls.Add(this.gboxPlayerMode);
             this.Name = "FormNewPart";
             this.Text = "FormNewPart";
             this.Load += new System.EventHandler(this.FormNewPart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSizeShip)).EndInit();
+            this.gboxGameMode.ResumeLayout(false);
+            this.gboxGameMode.PerformLayout();
+            this.gboxPlayerMode.ResumeLayout(false);
+            this.gboxPlayerMode.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,9 +327,8 @@
 
         #endregion
         private System.Windows.Forms.TextBox txtNamePart;
-        private System.Windows.Forms.TextBox txtNamePlayer;
-        private System.Windows.Forms.TextBox txtNameSecondPlayer;
-        private System.Windows.Forms.TextBox txtIPv4SecondPlayer;
+        private System.Windows.Forms.TextBox txtPlayerOne;
+        private System.Windows.Forms.TextBox txtPlayerTwo;
         private System.Windows.Forms.Button cmdPlay;
         private System.Windows.Forms.RadioButton rdbPartLocal;
         private System.Windows.Forms.RadioButton rdbPartOnline;
@@ -230,5 +338,15 @@
         private System.Windows.Forms.Button cmdRemoveShip;
         private System.Windows.Forms.TextBox txtShip;
         private System.Windows.Forms.NumericUpDown nudSizeShip;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtComputerName;
+        private System.Windows.Forms.RadioButton rdbHost;
+        private System.Windows.Forms.RadioButton rdbClient;
+        private System.Windows.Forms.GroupBox gboxGameMode;
+        private System.Windows.Forms.GroupBox gboxPlayerMode;
+        private System.Windows.Forms.Label lblPlayerTwo;
+        private System.Windows.Forms.Label lblPlayerOne;
+        private System.Windows.Forms.Label lblPartyName;
+        private System.Windows.Forms.Label lblComputerName;
     }
 }
