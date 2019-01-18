@@ -30,6 +30,7 @@
         {
             this.lstPart = new System.Windows.Forms.ListBox();
             this.cmdPlay = new System.Windows.Forms.Button();
+            this.cmdStartPart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstPart
@@ -50,11 +51,22 @@
             this.cmdPlay.UseVisualStyleBackColor = true;
             this.cmdPlay.Click += new System.EventHandler(this.cmdPlay_Click);
             // 
+            // cmdStartPart
+            // 
+            this.cmdStartPart.Location = new System.Drawing.Point(181, 271);
+            this.cmdStartPart.Name = "cmdStartPart";
+            this.cmdStartPart.Size = new System.Drawing.Size(75, 23);
+            this.cmdStartPart.TabIndex = 2;
+            this.cmdStartPart.Text = "Jouer";
+            this.cmdStartPart.UseVisualStyleBackColor = true;
+            this.cmdStartPart.Click += new System.EventHandler(this.cmdStartPart_Click);
+            // 
             // FormListPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(344, 450);
+            this.Controls.Add(this.cmdStartPart);
             this.Controls.Add(this.cmdPlay);
             this.Controls.Add(this.lstPart);
             this.Name = "FormListPart";
@@ -68,5 +80,6 @@
 
         private System.Windows.Forms.ListBox lstPart;
         private System.Windows.Forms.Button cmdPlay;
+        private System.Windows.Forms.Button cmdStartPart;
     }
 }
