@@ -9,12 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Newtonsoft.Json;
+using Apache.NMS;
+using Apache.NMS.Util;
+using System.Threading;
 
 namespace BatailleNavale
 {
     public partial class FormPart : Form
     {
+        //création du delegate
+        public delegate void GetResponse(string response);
+
         private bool gameStarted = false;
+
+        private bool playerIsReady = false;
+
 
         List<Player> players = new List<Player>();
 
@@ -48,10 +57,10 @@ namespace BatailleNavale
                 lstPlayerShip.Items.Add(playerShip.Name + " " + playerShip.Size + " cases");
             }
 
-
-            if(FormNewPart.IsNetwork)
+            if(FormNewPart.IsMultiplayer)
             {
-
+                Thread thRead = new Thread(ReadNextMessageQueue); //création du thread
+                thRead.Start(); //lancement du thread
             }
         }
 
@@ -154,13 +163,18 @@ namespace BatailleNavale
         
         private void cmdReady_Click(object sender, EventArgs e)
         {
-            gameStarted = true;
+            playerIsReady = true; 
 
             grid.CleanGrid();
 
             Controls.Remove(cmdReady);
 
             CreateButtonSave();
+
+            if(FormNewPart.IsMultiplayer)
+            {
+                SendNewMessageQueue("ready");
+            }
         }
 
         private void CreateButtonSave()
@@ -206,6 +220,123 @@ namespace BatailleNavale
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
             file.Close();
         }
+        #endregion
+
+
+        #region NetWork methods
+        private void ReadNextMessageQueue()
+        {
+            while (true)
+            {
+                //Attention, lit les messages dans la queue de l'autre joueur
+                //queuename = "Q" + idOtherPlayer.
+                string queueName = "Q" + "Q" + FormNewPart.IdPlayer;
+                Console.WriteLine(queueName);
+
+                string brokerUri = $"activemq:tcp://SC-C315-PC07:61616";  // Default port
+                NMSConnectionFactory factory = new NMSConnectionFactory(brokerUri);
+
+                using (IConnection connection = factory.CreateConnection())
+                {
+                    connection.Start();
+                    using (ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge))
+                    using (IDestination dest = session.GetQueue(queueName))
+                    using (IMessageConsumer consumer = session.CreateConsumer(dest))
+                    {
+                        IMessage msg = consumer.Receive();
+                        if (msg is ITextMessage)
+                        {
+                            ITextMessage txtMsg = msg as ITextMessage;
+                            string body = txtMsg.Text;
+
+                            Console.WriteLine($"Received message: {txtMsg.Text}");
+
+                            string value = "";
+                            if(gameStarted)
+                            {
+                                if (txtMsg.Text == "A2")
+                                {
+                                    value = "touche";
+                                }
+                                else
+                                {
+                                    value = "raté";
+                                }
+                            }
+                            else
+                            {
+                                if (txtMsg.Text == "ready")
+                                {
+                                    if(playerIsReady)
+                                    {
+                                        MessageBox.Show("Début de la partie");
+                                        SendNewMessageQueue("gameStart");
+                                        gameStarted = true;
+                                    }
+                                }
+
+                                if(txtMsg.Text == "gameStart")
+                                {
+                                    MessageBox.Show("Début de la partie");
+                                    gameStarted = true;
+                                }
+                            }
+                            
+
+                            try
+                            {
+                                //On invoque le delegate pour qu'il effectue la tâche sur le temps de l'autre thread.
+                                Invoke((GetResponse)DisplayResponse, value);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine("Erreur invoke" + ex.Message);
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Unexpected message type: " + msg.GetType().Name);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SendNewMessageQueue(string text)
+        {
+            //Envoie les messages dans sa propre queue
+            //queuename = "Q" + idPlayer.
+            string queueName = "Q" + (FormNewPart.IdPlayer + 1) % 2;
+
+            Console.WriteLine($"Adding message to queue topic: {queueName}");
+
+            string brokerUri = $"activemq:tcp://sc-c315-pc07:61616";  // Default port
+            NMSConnectionFactory factory = new NMSConnectionFactory(brokerUri);
+
+            using (IConnection connection = factory.CreateConnection())
+            {
+                connection.Start();
+
+                using (ISession session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge))
+                using (IDestination dest = session.GetQueue(queueName))
+                using (IMessageProducer producer = session.CreateProducer(dest))
+                {
+                    producer.DeliveryMode = MsgDeliveryMode.NonPersistent;
+
+                    producer.Send(session.CreateTextMessage(text));
+                    Console.WriteLine($"Sent {text} messages");
+                }
+            }
+        }
+
+        private void DisplayResponse(string res)
+        {
+            Console.WriteLine(res);
+        }
+
+
+
         #endregion
     }
 }

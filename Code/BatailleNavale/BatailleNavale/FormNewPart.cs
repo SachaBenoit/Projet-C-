@@ -27,7 +27,9 @@ namespace BatailleNavale
 
         private FormPart PartForm;
 
-        private static bool isNetwork = false;
+        private static bool isMultiplayer = false;
+
+        private static int idPlayer = 0;
 
 
         #region Accesseurs
@@ -60,11 +62,19 @@ namespace BatailleNavale
             }
         }
 
-        public static bool IsNetwork
+        public static bool IsMultiplayer
         {
             get
             {
-                return isNetwork;
+                return isMultiplayer;
+            }
+        }
+
+        public static int IdPlayer
+        {
+            get
+            {
+                return idPlayer;
             }
         }
 
@@ -104,9 +114,6 @@ namespace BatailleNavale
 
         private void cmdPlay_Click(object sender, EventArgs e)
         {
-            
-
-
             if (rdbPartOnline.Checked)
             {
                 if (rdbHost.Checked)
@@ -116,7 +123,7 @@ namespace BatailleNavale
                 }
                 else if (rdbClient.Checked)
                 {
-                    if (PingTest())//si le nom de l'ordinateur est pingable
+                    if (PingTest()) //si le nom de l'ordinateur est pingable
                     {
                         computerName = txtComputerName.Text;
                         StartGame();
@@ -184,17 +191,16 @@ namespace BatailleNavale
 
         private void rdbPartOnline_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
 
-            if (rb.Checked)
+            if (rdbPartOnline.Checked)
             {
-                isNetwork = true;
+                isMultiplayer = true;
 
                 gboxPlayerMode.Visible = true;
             }
             else
             {
-                isNetwork = false;
+                isMultiplayer = false;
 
                 gboxPlayerMode.Visible = false;
 
@@ -205,18 +211,17 @@ namespace BatailleNavale
 
         private void rdbClient_CheckedChanged(object sender, EventArgs e)
         {
-            RadioButton rb = sender as RadioButton;
-
-            if (rb.Checked)
+            if (rdbClient.Checked)
             {
                 txtComputerName.Visible = true;
                 lblComputerName.Visible = true;
+                idPlayer = 0;
             }
             else
             {
                 txtComputerName.Visible = false;
                 lblComputerName.Visible = false;
-
+                idPlayer = 1;
 
             }
         }
