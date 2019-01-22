@@ -23,6 +23,10 @@ namespace BatailleNavale
         private bool gameStarted = false;
 
         private bool playerIsReady = false;
+        private bool playerTwoIsReady = false;
+
+        public delegate void BackToForm();
+
 
 
         List<Player> players = new List<Player>();
@@ -176,15 +180,25 @@ namespace BatailleNavale
             }
         }
 
-        private void StartGame()
+        public void StartGame()
         {
-            gameStarted = true;
+            try
+            {
+                MessageBox.Show("START" + " ID du joueur : " + FormNewPart.IdPlayer);
 
-            grid.CleanGrid();
+                gameStarted = true;
 
-            Controls.Remove(cmdReady);
+                grid.CleanGrid();
 
-            CreateButtonSave();
+                Controls.Remove(cmdReady);
+
+                CreateButtonSave();
+            }
+            catch(Exception ex)
+            {
+                return;
+            }
+            
         }
 
         private void CreateButtonSave()
@@ -240,7 +254,7 @@ namespace BatailleNavale
             {
                 //Attention, lit les messages dans la queue de l'autre joueur
                 //queuename = "Q" + idOtherPlayer.
-                string queueName = "Q" + FormNewPart.IdPlayer + 1;
+                string queueName = "Q" + FormNewPart.IdPlayer;
                 Console.WriteLine(queueName);
 
                 string brokerUri = $"activemq:tcp://SC-C315-PC07:61616";  // Default port
@@ -264,17 +278,26 @@ namespace BatailleNavale
                             string value = "";
                             if(gameStarted)
                             {
-                                MessageBox.Show("Parite lancée !");
+                                Console.WriteLine("Partie lancée");
                             }
                             else
                             {
-                                if(playerIsReady && txtMsg.Text == "ready")
+                                if(txtMsg.Text == "ready")
                                 {
-                                    MessageBox.Show("Début de la partie");
-                                    StartGame();
+                                    if(playerIsReady)
+                                    {
+                                        
+                                        Invoke((BackToForm)StartGame);
+                                        SendNewMessageQueue("startGame");
+                                        
+                                    }
                                 }
+                                else if(txtMsg.Text == "startGame")
+                                {
+                                    Invoke((BackToForm)StartGame);
+                                }
+
                             }
-                                              
 
                             try
                             {
@@ -300,7 +323,7 @@ namespace BatailleNavale
         {
             //Envoie les messages dans sa propre queue
             //queuename = "Q" + idPlayer.
-            string queueName = "Q" + ((FormNewPart.IdPlayer + 1) % 2) + 1;
+            string queueName = "Q" + ((FormNewPart.IdPlayer + 1) % 2);
 
             Console.WriteLine($"Adding message to queue topic: {queueName}");
 
@@ -331,5 +354,7 @@ namespace BatailleNavale
 
 
         #endregion
+
+
     }
 }

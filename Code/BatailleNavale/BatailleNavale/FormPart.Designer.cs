@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+          
+
             this.cmdReady = new System.Windows.Forms.Button();
             this.cmdSetOrientation = new System.Windows.Forms.Button();
             this.lblOrientation = new System.Windows.Forms.Label();
@@ -95,5 +97,6 @@
         private System.Windows.Forms.Button cmdSetOrientation;
         private System.Windows.Forms.Label lblOrientation;
         private System.Windows.Forms.ListBox lstPlayerShip;
+
     }
 }

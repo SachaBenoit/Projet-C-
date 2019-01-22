@@ -61,7 +61,6 @@
             this.cmdChargePart.TabIndex = 2;
             this.cmdChargePart.Text = "Charger Partie";
             this.cmdChargePart.UseVisualStyleBackColor = true;
-            this.cmdChargePart.Click += new System.EventHandler(this.cmdChargePart_Click);
             // 
             // FormMenu
             // 
@@ -72,8 +71,9 @@
             this.Controls.Add(this.cmdNewPart);
             this.Controls.Add(this.cmdCloseApplication);
             this.Name = "FormMenu";
-            this.Text = "FromMenu";
+            this.Text = "FormMenu";
             this.ResumeLayout(false);
+            
 
         }
 

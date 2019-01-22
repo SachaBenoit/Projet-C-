@@ -29,7 +29,7 @@ namespace BatailleNavale
 
         private static bool isMultiplayer = false;
 
-        private static int idPlayer = 0;
+        private static int idPlayer = 1;
 
 
         #region Accesseurs
@@ -150,9 +150,11 @@ namespace BatailleNavale
 
             nbCells = Convert.ToInt32(nudNbCells.Value);
 
-            this.Hide();
+            
             PartForm = new FormPart();
             PartForm.Show();
+            this.Hide();
+            
         }
 
         #region Methode Ship
@@ -258,5 +260,7 @@ namespace BatailleNavale
 
             return pingable;
         }
+
+
     }
 }
