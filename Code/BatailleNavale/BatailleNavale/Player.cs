@@ -10,9 +10,10 @@ namespace BatailleNavale
     public class Player
     {
         private string name;
-        private string ipAddress;
+        private int nbShipsAlive = 0;
         private bool ready = false;
         private List<Ship> ships;
+        
 
         public bool Ready
         {
@@ -29,10 +30,9 @@ namespace BatailleNavale
                 return ships;
             }
         }
-        public Player(string name, string ipAddress)
+        public Player(string name)
         {
             this.name = name;
-            this.ipAddress = ipAddress;
             this.ships = new List<Ship>();
         }
 
@@ -43,6 +43,8 @@ namespace BatailleNavale
 
         public bool Shoot(Player targetPlayer, string targetPosition)
         {
+            
+
             foreach(Ship ship in targetPlayer.ships)
             {
                 foreach(string position in ship.Positions.Keys)
@@ -54,8 +56,19 @@ namespace BatailleNavale
                         {
                             Console.WriteLine("----- TOUCHÉ COULÉ ! -----");
                             MessageBox.Show("Touché coulé !");
+
+                            //retire un bateau du compteur
+                            this.nbShipsAlive--;
+
+                            //si tous les bateaux ont été détruits la partie est gagnée
+                            if (nbShipsAlive == 0)
+                            {
+                                MessageBox.Show("Bravo, Vous avez gagné");
+                            }
+
+
                         }
-                        else
+                        else // un bateau à été touché
                         {
                             Console.WriteLine("----- TOUCHÉ ! -----");
                         }
@@ -65,14 +78,20 @@ namespace BatailleNavale
 
                 }
             }
-            Console.WriteLine("---- PLOUF ! -----");
+
+            //Aucun bateau n'a été touché
+            Console.WriteLine("---- PLOUF ! À l'eau ! -----");
             return false;
         }
 
+        //Ajoute le bateau entré en paramêtre à la liste des bateaux du joueur
         public void AddShip(Ship ship)
         {
             ships.Add(ship);
+            this.nbShipsAlive++;
         }
+
+  
 
 
     }
