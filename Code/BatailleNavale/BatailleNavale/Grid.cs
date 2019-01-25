@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * 
+ * Classe représentant une grille, héritée de la classe PictureBox
+ * 25.01.2019
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

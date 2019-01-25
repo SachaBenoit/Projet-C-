@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * 
+ * Formulaire du menu pricipale du jeu
+ * 25.01.2019
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

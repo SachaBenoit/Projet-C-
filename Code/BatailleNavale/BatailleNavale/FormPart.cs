@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * 
+ * Formulaire d'une partie de bataille navale 
+ * 25.01.2019 
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -192,8 +200,10 @@ namespace BatailleNavale
         {
             try
             {
-                MessageBox.Show("START" + " ID du joueur : " + FormNewPart.IdPlayer);
-
+                if(FormNewPart.IsMultiplayer)
+                {
+                    MessageBox.Show("START" + " ID du joueur : " + FormNewPart.IdPlayer);
+                }
                 gameStarted = true;
 
                 grid.CleanGrid();

@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * 
+ * Classe représantant un joueur 
+ * 25.01.2019
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +49,13 @@ namespace BatailleNavale
             return name;
         }
 
+
+        /// <summary>
+        /// Ce produit lorsque un joueur à cliquer sur une case de la grille, si un bateau ce trouve dessous c'est une touche sinon c'est un raté
+        /// </summary>
+        /// <param name="targetPlayer"></param>
+        /// <param name="targetPosition"></param>
+        /// <returns></returns>
         public bool Shoot(Player targetPlayer, string targetPosition)
         {
             
@@ -63,7 +78,8 @@ namespace BatailleNavale
                             //si tous les bateaux ont été détruits la partie est gagnée
                             if (nbShipsAlive == 0)
                             {
-                                MessageBox.Show("Bravo, Vous avez gagné");
+                                MessageBox.Show("Bravo, Vous avez gagné !");
+
                             }
 
 
@@ -84,7 +100,10 @@ namespace BatailleNavale
             return false;
         }
 
-        //Ajoute le bateau entré en paramêtre à la liste des bateaux du joueur
+        /// <summary>
+        /// Ajoute le bateau entré en paramêtre à la liste des bateaux du joueur
+        /// </summary>
+        /// <param name="ship"></param>
         public void AddShip(Ship ship)
         {
             ships.Add(ship);
