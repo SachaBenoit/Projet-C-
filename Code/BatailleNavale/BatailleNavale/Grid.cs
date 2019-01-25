@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * 
+ * Classe représentant une grille, héritée de la classe PictureBox
+ * 25.01.2019
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -94,6 +101,14 @@ namespace BatailleNavale
         }
 
 
+        /// <summary>
+        /// Constructeur pour la classe Grid
+        /// </summary>
+        /// <param name="gridPlayer"></param>
+        /// <param name="cellSize">taille d'une cellule (largeur et hauteur)</param>
+        /// <param name="nbCells">nombre de cellules verticalement et horizontalement</param>
+        /// <param name="position_top">position Y du coin en haut à gauche de la grille</param>
+        /// <param name="position_left">Position X du coin en haut à gauche de la grille</param>
         public Grid(Player gridPlayer, int cellSize, int nbCells , int position_top = 0, int position_left = 0)
         {
             this.gridPlayer = gridPlayer;
@@ -106,6 +121,10 @@ namespace BatailleNavale
             CreatePicture();     
         }
 
+        /// <summary>
+        /// Créer une pictureBox
+        /// </summary>
+        /// <returns></returns>
         private PictureBox CreatePicture()
         {
             int pictureBox_top = position_top;
@@ -200,6 +219,9 @@ namespace BatailleNavale
 
         }
 
+        /// <summary>
+        /// Efface puis redessine tous les bateaux
+        /// </summary>
         private void DrawShips()
         {
 

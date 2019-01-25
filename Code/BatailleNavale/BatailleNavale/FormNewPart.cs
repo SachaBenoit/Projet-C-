@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * 
+ * Formulaire de création d'une nouvelle partie 
+ * 25.01.2019
+ * Meylan Benoit & Usan Sacha 
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -111,7 +118,11 @@ namespace BatailleNavale
             lblComputerName.Visible = false;
         }
 
-
+        /// <summary>
+        /// Evenement sur le clique du bouton "Jouer"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmdPlay_Click(object sender, EventArgs e)
         {
             if (rdbPartOnline.Checked)
@@ -183,11 +194,8 @@ namespace BatailleNavale
 
         private void cmdRemoveShip_Click(object sender, EventArgs e)
         {
-            if (lstShip.SelectedItem != null)
-            {
-                listShip.RemoveAt(lstShip.SelectedIndex);
-                lstShip.Items.Remove(lstShip.SelectedItem);
-            }
+            listShip.RemoveAt(lstShip.SelectedIndex);
+            lstShip.Items.Remove(lstShip.SelectedItem);
         }
 
         #endregion

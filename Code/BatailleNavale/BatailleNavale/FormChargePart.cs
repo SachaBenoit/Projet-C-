@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * 
+ * Formulaire qui permet normalement de chargé une partie (non-fonctionnel)
+ * 25.01.2019
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

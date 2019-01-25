@@ -61,9 +61,9 @@
             this.cmdChargePart.Name = "cmdChargePart";
             this.cmdChargePart.Size = new System.Drawing.Size(127, 106);
             this.cmdChargePart.TabIndex = 2;
-            this.cmdChargePart.Text = "Liste Partie";
+            this.cmdChargePart.Text = "Charger Partie";
             this.cmdChargePart.UseVisualStyleBackColor = true;
-            this.cmdChargePart.Click += new System.EventHandler(this.cmdListPart_Click);
+            this.cmdChargePart.Click += new System.EventHandler(this.cmdChargePart_Click);
             // 
             // lblName
             // 

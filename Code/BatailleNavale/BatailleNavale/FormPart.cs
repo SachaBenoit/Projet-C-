@@ -1,5 +1,12 @@
-﻿using System;
-using System.IO;
+﻿/*
+ * 
+ * Formulaire d'une partie de bataille navale 
+ * 25.01.2019 
+ * Meylan Benoit & Usan Sacha
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using Newtonsoft.Json;
 using Apache.NMS;
 using Apache.NMS.Util;
@@ -31,51 +39,22 @@ namespace BatailleNavale
 
         List<Player> players = new List<Player>();
 
-<<<<<<< HEAD
-        Player player = new Player(FormNewPart.NamePlayer, "192.168.0.1");
-        Player player2 = new Player("robot", "192.168.0.2");
-=======
-        Player player;
-        Player player2;
->>>>>>> sacha
+        Player player = new Player(FormNewPart.NamePlayer);
+        Player player2 = new Player("robot");
 
         Grid grid;
 
         public FormPart()
         {
             InitializeComponent();
-
-            if (FormListPart.Part != null)
-            {
-                ReadFile();
-            }
         }
 
-        private void ReadFile()
-        {
-            string json = File.ReadAllText(@"sauvegarde\" + FormListPart.Part + ".json");
-            JsonTextReader reader = new JsonTextReader(new StringReader(json));
-            while (reader.Read())
-            {
-                if (reader.Value != null)
-                {
-                    Console.WriteLine("Token: {0}, Value: {1}", reader.TokenType, reader.Value);
-                }
-            }
-        }
-
-        
         private void FormPart_Load(object sender, EventArgs e)
         {
-<<<<<<< HEAD
             
 
             players.Add(player);
             players.Add(player2);
-=======
-            players.Add(player = new Player(FormNewPart.NamePlayer, FormNewPart.LocalIP));
-            players.Add(player2 = new Player("robot", "192.168.0.2"));          
->>>>>>> sacha
 
             grid = new Grid(player, 50, FormNewPart.NbCells, 50, 50);
             grid.MouseClick += new MouseEventHandler(ClickOnPictureBox);
@@ -99,7 +78,6 @@ namespace BatailleNavale
             }
          
         }
-        
 
         #region public methods
         public void ClickOnPictureBox(object sender, MouseEventArgs e)
@@ -218,12 +196,14 @@ namespace BatailleNavale
         /// <summary>
         /// Démarre la partie 
         /// </summary>
-        public void StartGame()
+        private void StartGame()
         {
             try
             {
-                MessageBox.Show("START" + " ID du joueur : " + FormNewPart.IdPlayer);
-
+                if(FormNewPart.IsMultiplayer)
+                {
+                    MessageBox.Show("START" + " ID du joueur : " + FormNewPart.IdPlayer);
+                }
                 gameStarted = true;
 
                 grid.CleanGrid();
@@ -255,6 +235,12 @@ namespace BatailleNavale
             this.Controls.Add(button);
         }
 
+
+        /// <summary>
+        /// Gestion de la sauvgarde 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmdSavePart_Click(object sender, EventArgs e)
         {
             StringBuilder sb = new StringBuilder();
@@ -274,7 +260,7 @@ namespace BatailleNavale
 
                 writer.WritePropertyName("SizeGrid");
                 writer.WriteValue(grid.NbCells);
-                
+
                 writer.WritePropertyName("Ships");
                 writer.WriteStartObject();
 
@@ -284,10 +270,10 @@ namespace BatailleNavale
 
                     writer.WritePropertyName(playerShip.Name);
                     writer.WriteStartArray();
-                    
+
                     writer.WriteValue(playerShip.Name);
                     writer.WriteValue(playerShip.Size);
-                    
+
                     writer.WriteStartObject();
 
                     foreach (KeyValuePair<string, bool> position in playerShip.Positions)
@@ -302,25 +288,26 @@ namespace BatailleNavale
 
                         NumPosition++;
                     }
-                    
+
                     writer.WriteEndObject();
-                    
+
                     writer.WriteValue(playerShip.Orientation);
-                    
+
                     writer.WriteEnd();
                 }
 
                 writer.WriteEndObject();
-                
+
                 writer.WriteEndObject();
             }
-            
+
             if (!Directory.Exists("sauvegarde"))
                 Directory.CreateDirectory("sauvegarde");
 
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"sauvegarde\" + FormNewPart.NamePart + ".json");
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
             file.Close();
+
         }
         #endregion
 
