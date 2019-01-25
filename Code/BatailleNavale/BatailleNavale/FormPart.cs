@@ -18,20 +18,39 @@ namespace BatailleNavale
 
         List<Player> players = new List<Player>();
 
-        Player player = new Player(FormNewPart.NamePlayer, FormNewPart.LocalIP);
-        Player player2 = new Player("robot", "192.168.0.2");
+        Player player;
+        Player player2;
 
         Grid grid;
 
         public FormPart()
         {
             InitializeComponent();
+
+            if (FormListPart.Part != null)
+            {
+                ReadFile();
+            }
         }
 
+        private void ReadFile()
+        {
+            string json = File.ReadAllText(@"sauvegarde\" + FormListPart.Part + ".json");
+            JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            while (reader.Read())
+            {
+                if (reader.Value != null)
+                {
+                    Console.WriteLine("Token: {0}, Value: {1}", reader.TokenType, reader.Value);
+                }
+            }
+        }
+
+        
         private void FormPart_Load(object sender, EventArgs e)
         {
-            players.Add(player);
-            players.Add(player2);
+            players.Add(player = new Player(FormNewPart.NamePlayer, FormNewPart.LocalIP));
+            players.Add(player2 = new Player("robot", "192.168.0.2"));          
 
             grid = new Grid(player, 50, FormNewPart.NbCells, 50, 50);
             grid.MouseClick += new MouseEventHandler(ClickOnPictureBox);
@@ -53,6 +72,7 @@ namespace BatailleNavale
             timer.Tick += new EventHandler(timer_Tick);
             timer.Start();
         }
+        
 
         public void ClickOnPictureBox(object sender, MouseEventArgs e)
         {
@@ -230,6 +250,9 @@ namespace BatailleNavale
                 
                 writer.WriteEndObject();
             }
+            
+            if (!Directory.Exists("sauvegarde"))
+                Directory.CreateDirectory("sauvegarde");
 
             System.IO.StreamWriter file = new System.IO.StreamWriter(@"sauvegarde\" + FormNewPart.NamePart + ".json");
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
