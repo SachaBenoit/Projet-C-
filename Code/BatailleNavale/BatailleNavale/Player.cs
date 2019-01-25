@@ -42,7 +42,6 @@ namespace BatailleNavale
             this.name = name;
             this.ships = new List<Ship>();
 
-            nbShipsAlive = 0;
         }
 
         public string GetName()
