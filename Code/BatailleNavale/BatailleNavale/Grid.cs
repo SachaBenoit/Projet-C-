@@ -123,8 +123,10 @@ namespace BatailleNavale
         }
 
 
-
-
+        /// <summary>
+        /// Placement d'un bateau par le joueur
+        /// </summary>
+        /// <param name="shipToPlace"></param>
         public void PlaceShip(Ship shipToPlace)
         {
             try

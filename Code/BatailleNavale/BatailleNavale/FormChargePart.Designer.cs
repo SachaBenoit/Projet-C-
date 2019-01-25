@@ -59,6 +59,7 @@
             this.Controls.Add(this.lstPart);
             this.Name = "FormChargePart";
             this.Text = "FormChargePart";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChargePart_FormClosed);
             this.ResumeLayout(false);
 
         }

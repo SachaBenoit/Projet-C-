@@ -21,5 +21,10 @@ namespace BatailleNavale
         {
 
         }
+
+        private void FormChargePart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }

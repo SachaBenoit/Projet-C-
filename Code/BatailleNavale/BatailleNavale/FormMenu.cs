@@ -27,16 +27,18 @@ namespace BatailleNavale
             NewPartForm.Show();
         }
 
+
+        private void cmdCloseApplication_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
+
         private void cmdChargePart_Click(object sender, EventArgs e)
         {
             this.Hide();
             ChargePartForm = new FormChargePart();
             ChargePartForm.Show();
-        }
-
-        private void cmdCloseApplication_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.Application.Exit();
+            
         }
     }
 }

@@ -150,10 +150,10 @@ namespace BatailleNavale
 
             nbCells = Convert.ToInt32(nudNbCells.Value);
 
-            
+            this.Hide();
             PartForm = new FormPart();
             PartForm.Show();
-            this.Hide();
+       
             
         }
 
@@ -261,6 +261,9 @@ namespace BatailleNavale
             return pingable;
         }
 
-
+        private void FormNewPart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }

@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-          
-
             this.cmdReady = new System.Windows.Forms.Button();
             this.cmdSetOrientation = new System.Windows.Forms.Button();
             this.lblOrientation = new System.Windows.Forms.Label();
@@ -86,6 +84,7 @@
             this.Controls.Add(this.lstPlayerShip);
             this.Name = "FormPart";
             this.Text = "FormPart";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormPart_FormClosed);
             this.Load += new System.EventHandler(this.FormPart_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

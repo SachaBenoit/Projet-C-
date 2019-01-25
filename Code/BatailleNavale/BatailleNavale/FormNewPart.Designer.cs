@@ -20,6 +20,8 @@
             base.Dispose(disposing);
         }
 
+
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -115,7 +117,7 @@
             // 
             this.nudNbCells.Location = new System.Drawing.Point(24, 221);
             this.nudNbCells.Maximum = new decimal(new int[] {
-            15,
+            10,
             0,
             0,
             0});
@@ -313,6 +315,7 @@
             this.Controls.Add(this.gboxPlayerMode);
             this.Name = "FormNewPart";
             this.Text = "FormNewPart";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormNewPart_FormClosed);
             this.Load += new System.EventHandler(this.FormNewPart_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudNbCells)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSizeShip)).EndInit();

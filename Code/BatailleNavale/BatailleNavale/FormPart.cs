@@ -23,7 +23,7 @@ namespace BatailleNavale
         private bool gameStarted = false;
 
         private bool playerIsReady = false;
-        private bool playerTwoIsReady = false;
+
 
         public delegate void BackToForm();
 
@@ -43,6 +43,8 @@ namespace BatailleNavale
 
         private void FormPart_Load(object sender, EventArgs e)
         {
+            
+
             players.Add(player);
             players.Add(player2);
 
@@ -72,6 +74,8 @@ namespace BatailleNavale
         #region public methods
         public void ClickOnPictureBox(object sender, MouseEventArgs e)
         {
+            
+
             PictureBox pbx = sender as PictureBox;
             
             Point mouse_position = new Point(); // position de la souris par rapport à la grille
@@ -180,6 +184,10 @@ namespace BatailleNavale
             }
         }
 
+
+        /// <summary>
+        /// Démarre la partie 
+        /// </summary>
         public void StartGame()
         {
             try
@@ -196,11 +204,14 @@ namespace BatailleNavale
             }
             catch(Exception ex)
             {
-                return;
+                Console.WriteLine("Cette exception est apparue : " + ex);
             }
             
         }
 
+        /// <summary>
+        /// Créer un nouveau bouton qui permet la sauvegarde et l'ajoute à la liste des controls
+        /// </summary>
         private void CreateButtonSave()
         {
             Button button = new Button();
@@ -246,8 +257,11 @@ namespace BatailleNavale
         }
         #endregion
 
-
         #region NetWork methods
+
+        /// <summary>
+        /// les messages envoyés dans la queue correspondante à la variable :  "queueName" 
+        /// </summary>
         private void ReadNextMessageQueue()
         {
             while (true)
@@ -257,7 +271,7 @@ namespace BatailleNavale
                 string queueName = "Q" + FormNewPart.IdPlayer;
                 Console.WriteLine(queueName);
 
-                string brokerUri = $"activemq:tcp://SC-C315-PC07:61616";  // Default port
+                string brokerUri = $"activemq:tcp://" + FormNewPart.ComputerName + ":61616";  // Default port
                 NMSConnectionFactory factory = new NMSConnectionFactory(brokerUri);
 
                 using (IConnection connection = factory.CreateConnection())
@@ -327,7 +341,7 @@ namespace BatailleNavale
 
             Console.WriteLine($"Adding message to queue topic: {queueName}");
 
-            string brokerUri = $"activemq:tcp://sc-c315-pc07:61616";  // Default port
+            string brokerUri = $"activemq:tcp://" + FormNewPart.ComputerName + ":61616";  // Default port
             NMSConnectionFactory factory = new NMSConnectionFactory(brokerUri);
 
             using (IConnection connection = factory.CreateConnection())
@@ -350,11 +364,11 @@ namespace BatailleNavale
         {
             
         }
-
-
-
         #endregion
 
-
+        private void FormPart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }
