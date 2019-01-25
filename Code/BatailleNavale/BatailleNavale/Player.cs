@@ -18,7 +18,6 @@ namespace BatailleNavale
     public class Player
     {
         private string name;
-        private int nbShipsAlive = 0;
         private bool ready = false;
         private List<Ship> ships;
         
@@ -42,6 +41,8 @@ namespace BatailleNavale
         {
             this.name = name;
             this.ships = new List<Ship>();
+
+            nbShipsAlive = 0;
         }
 
         public string GetName()
@@ -71,18 +72,6 @@ namespace BatailleNavale
                         {
                             Console.WriteLine("----- TOUCHÉ COULÉ ! -----");
                             MessageBox.Show("Touché coulé !");
-
-                            //retire un bateau du compteur
-                            this.nbShipsAlive--;
-
-                            //si tous les bateaux ont été détruits la partie est gagnée
-                            if (nbShipsAlive == 0)
-                            {
-                                MessageBox.Show("Bravo, Vous avez gagné !");
-
-                            }
-
-
                         }
                         else // un bateau à été touché
                         {
@@ -107,7 +96,6 @@ namespace BatailleNavale
         public void AddShip(Ship ship)
         {
             ships.Add(ship);
-            this.nbShipsAlive++;
         }
 
   
