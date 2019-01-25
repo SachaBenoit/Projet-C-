@@ -31,8 +31,8 @@ namespace BatailleNavale
 
         List<Player> players = new List<Player>();
 
-        Player player = new Player(FormNewPart.NamePlayer, "192.168.0.1");
-        Player player2 = new Player("robot", "192.168.0.2");
+        Player player = new Player(FormNewPart.NamePlayer);
+        Player player2 = new Player("robot");
 
         Grid grid;
 
@@ -188,7 +188,7 @@ namespace BatailleNavale
         /// <summary>
         /// Démarre la partie 
         /// </summary>
-        public void StartGame()
+        private void StartGame()
         {
             try
             {
