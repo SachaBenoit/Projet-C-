@@ -1,6 +1,6 @@
 ﻿namespace BatailleNavale
 {
-    partial class FormChargePart
+    partial class FormListPart
     {
         /// <summary>
         /// Required designer variable.
@@ -30,6 +30,7 @@
         {
             this.lstPart = new System.Windows.Forms.ListBox();
             this.cmdPlay = new System.Windows.Forms.Button();
+            this.cmdStartPart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstPart
@@ -50,16 +51,33 @@
             this.cmdPlay.UseVisualStyleBackColor = true;
             this.cmdPlay.Click += new System.EventHandler(this.cmdPlay_Click);
             // 
-            // FormChargePart
+            // cmdStartPart
+            // 
+            this.cmdStartPart.Location = new System.Drawing.Point(181, 271);
+            this.cmdStartPart.Name = "cmdStartPart";
+            this.cmdStartPart.Size = new System.Drawing.Size(75, 23);
+            this.cmdStartPart.TabIndex = 2;
+            this.cmdStartPart.Text = "Jouer";
+            this.cmdStartPart.UseVisualStyleBackColor = true;
+            this.cmdStartPart.Click += new System.EventHandler(this.cmdStartPart_Click);
+            // 
+            // FormListPart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(344, 450);
+            this.Controls.Add(this.cmdStartPart);
             this.Controls.Add(this.cmdPlay);
             this.Controls.Add(this.lstPart);
+<<<<<<< HEAD:Code/BatailleNavale/BatailleNavale/FormChargePart.Designer.cs
             this.Name = "FormChargePart";
             this.Text = "FormChargePart";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChargePart_FormClosed);
+=======
+            this.Name = "FormListPart";
+            this.Text = "FormListPart";
+            this.Load += new System.EventHandler(this.FormListPart_Load);
+>>>>>>> sacha:Code/BatailleNavale/BatailleNavale/FormListPart.Designer.cs
             this.ResumeLayout(false);
 
         }
@@ -68,5 +86,6 @@
 
         private System.Windows.Forms.ListBox lstPart;
         private System.Windows.Forms.Button cmdPlay;
+        private System.Windows.Forms.Button cmdStartPart;
     }
 }

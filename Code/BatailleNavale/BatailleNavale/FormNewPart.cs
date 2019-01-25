@@ -183,8 +183,11 @@ namespace BatailleNavale
 
         private void cmdRemoveShip_Click(object sender, EventArgs e)
         {
-            listShip.RemoveAt(lstShip.SelectedIndex);
-            lstShip.Items.Remove(lstShip.SelectedItem);
+            if (lstShip.SelectedItem != null)
+            {
+                listShip.RemoveAt(lstShip.SelectedIndex);
+                lstShip.Items.Remove(lstShip.SelectedItem);
+            }
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 using Newtonsoft.Json;
 using Apache.NMS;
 using Apache.NMS.Util;
@@ -31,22 +31,51 @@ namespace BatailleNavale
 
         List<Player> players = new List<Player>();
 
+<<<<<<< HEAD
         Player player = new Player(FormNewPart.NamePlayer, "192.168.0.1");
         Player player2 = new Player("robot", "192.168.0.2");
+=======
+        Player player;
+        Player player2;
+>>>>>>> sacha
 
         Grid grid;
 
         public FormPart()
         {
             InitializeComponent();
+
+            if (FormListPart.Part != null)
+            {
+                ReadFile();
+            }
         }
 
+        private void ReadFile()
+        {
+            string json = File.ReadAllText(@"sauvegarde\" + FormListPart.Part + ".json");
+            JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            while (reader.Read())
+            {
+                if (reader.Value != null)
+                {
+                    Console.WriteLine("Token: {0}, Value: {1}", reader.TokenType, reader.Value);
+                }
+            }
+        }
+
+        
         private void FormPart_Load(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             
 
             players.Add(player);
             players.Add(player2);
+=======
+            players.Add(player = new Player(FormNewPart.NamePlayer, FormNewPart.LocalIP));
+            players.Add(player2 = new Player("robot", "192.168.0.2"));          
+>>>>>>> sacha
 
             grid = new Grid(player, 50, FormNewPart.NbCells, 50, 50);
             grid.MouseClick += new MouseEventHandler(ClickOnPictureBox);
@@ -70,6 +99,7 @@ namespace BatailleNavale
             }
          
         }
+        
 
         #region public methods
         public void ClickOnPictureBox(object sender, MouseEventArgs e)
@@ -236,22 +266,59 @@ namespace BatailleNavale
 
                 writer.WriteStartObject();
 
-                writer.WritePropertyName("Partname");
+                writer.WritePropertyName("PartName");
                 writer.WriteValue(FormNewPart.NamePart);
 
-                writer.WritePropertyName("Playername");
-                writer.WriteValue(FormNewPart.NamePlayer);
+                writer.WritePropertyName("PlayerName");
+                writer.WriteValue(player.GetName());
 
+                writer.WritePropertyName("SizeGrid");
+                writer.WriteValue(grid.NbCells);
+                
                 writer.WritePropertyName("Ships");
-                writer.WriteStartArray();
-                writer.WriteValue("1");
-                writer.WriteValue("3");
-                writer.WriteValue("A2");
-                writer.WriteEnd();
+                writer.WriteStartObject();
+
+                foreach (Ship playerShip in player.Ships)
+                {
+                    int NumPosition = 0;
+
+                    writer.WritePropertyName(playerShip.Name);
+                    writer.WriteStartArray();
+                    
+                    writer.WriteValue(playerShip.Name);
+                    writer.WriteValue(playerShip.Size);
+                    
+                    writer.WriteStartObject();
+
+                    foreach (KeyValuePair<string, bool> position in playerShip.Positions)
+                    {
+                        writer.WritePropertyName("Position" + NumPosition);
+                        writer.WriteStartArray();
+
+                        writer.WriteValue(position.Key);
+                        writer.WriteValue(position.Value);
+
+                        writer.WriteEnd();
+
+                        NumPosition++;
+                    }
+                    
+                    writer.WriteEndObject();
+                    
+                    writer.WriteValue(playerShip.Orientation);
+                    
+                    writer.WriteEnd();
+                }
+
+                writer.WriteEndObject();
+                
                 writer.WriteEndObject();
             }
+            
+            if (!Directory.Exists("sauvegarde"))
+                Directory.CreateDirectory("sauvegarde");
 
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"" + FormNewPart.NamePart + ".json");
+            System.IO.StreamWriter file = new System.IO.StreamWriter(@"sauvegarde\" + FormNewPart.NamePart + ".json");
             file.WriteLine(sb.ToString()); // "sb" is the StringBuilder
             file.Close();
         }
